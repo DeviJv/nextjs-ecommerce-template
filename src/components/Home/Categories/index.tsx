@@ -1,7 +1,8 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useCallback, useRef, useEffect } from "react";
-import data from "./categoryData";
+import { useCallback, useRef, useEffect, useState } from "react";
+
+
 import Image from "next/image";
 
 // Import Swiper styles
@@ -9,8 +10,16 @@ import "swiper/css/navigation";
 import "swiper/css";
 import SingleItem from "./SingleItem";
 
+interface Category {
+  id: number;
+  name: string;
+  path: string;
+}
+
 const Categories = () => {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<any>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -21,12 +30,36 @@ const Categories = () => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
   }, []);
+ 
+   // 🔥 INIT SWIPER setelah render
+   useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/categories`,
+          { cache: "no-store" } // penting untuk ecommerce
+        );
 
-  useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.swiper.init();
-    }
+        const data = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error("Failed load categories", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCategories();
   }, []);
+  useEffect(() => {
+    if (!loading && sliderRef.current) {
+      sliderRef.current.swiper.update();
+    }
+  }, [loading]);
+
+  if (loading) {
+    return <div className="py-10 text-center">Loading categories...</div>;
+  }
 
   return (
     <section className="overflow-hidden pt-17.5">
@@ -134,9 +167,15 @@ const Categories = () => {
               },
             }}
           >
-            {data.map((item, key) => (
+           {categories.map((cat: any, key) => (
               <SwiperSlide key={key}>
-                <SingleItem item={item} />
+                <SingleItem
+                  item={{
+                    id: cat.id,
+                    title: cat.name,
+                    img: `${process.env.NEXT_PUBLIC_STORAGE_URL}/${cat.path}`
+                  }}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
