@@ -17,9 +17,41 @@ const ProductItem = ({ item }: { item: Product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   // update the QuickView state
-  const handleQuickViewUpdate = () => {
-    dispatch(updateQuickView({ ...item }));
-  };
+  const handleQuickViewUpdate = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/products/${item.slug}`,
+      { cache: "no-store" }
+    );
+
+    const json = await res.json();
+    const product = json.data;
+
+    const mapped = {
+      id: product.id,
+      slug: product.slug,
+      title: product.name,
+      description: product.description,
+      reviews: 0,
+      price: product.price,
+      discountedPrice: product.price,
+      currency: product.currency,
+      imgs: {
+        thumbnails: product.images.map((img: any) =>
+          `${process.env.NEXT_PUBLIC_STORAGE_URL}/${img.path}`
+        ),
+        previews: product.images.map((img: any) =>
+          `${process.env.NEXT_PUBLIC_STORAGE_URL}/${img.path}`
+        ),
+      },
+    };
+
+    dispatch(updateQuickView(mapped));
+    openModal();
+  } catch (err) {
+    console.error("Quick view fetch error", err);
+  }
+};
 
   // add to cart
   const handleAddToCart = () => {
@@ -52,16 +84,13 @@ const ProductItem = ({ item }: { item: Product }) => {
 
         <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
           <button
-            onClick={() => {
-              openModal();
-              handleQuickViewUpdate();
-            }}
+            onClick={handleQuickViewUpdate}
             id="newOne"
             aria-label="button for quick view"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+            className="flex items-center justify-center w-9 h-9 rounded-full shadow-1 ease-out duration-200 text-dark bg-white hover:text-green-dark"
           >
             <svg
-              className="fill-current"
+              className="fill-current h-5 w-5"
               width="16"
               height="16"
               viewBox="0 0 16 16"
@@ -85,7 +114,7 @@ const ProductItem = ({ item }: { item: Product }) => {
 
           <button
             onClick={() => handleAddToCart()}
-            className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-blue text-white ease-out duration-200 hover:bg-blue-dark"
+            className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-full bg-green-dark text-white ease-out duration-200 hover:bg-green-darker"
           >
             Add to cart
           </button>
@@ -94,10 +123,10 @@ const ProductItem = ({ item }: { item: Product }) => {
             onClick={() => handleItemToWishList()}
             aria-label="button for favorite select"
             id="favOne"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+            className="flex items-center justify-center w-9 h-9 rounded-full shadow-1 ease-out duration-200 text-dark bg-white hover:text-green-dark"
           >
             <svg
-              className="fill-current"
+              className="fill-current h-5 w-5"
               width="16"
               height="16"
               viewBox="0 0 16 16"

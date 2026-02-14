@@ -1,10 +1,67 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ProductItem from "@/components/Common/ProductItem";
 import shopData from "@/components/Shop/shopData";
 
+interface ApiProduct {
+  id: number;
+  name: string;
+  price: string;
+  currency: string;
+  slug: string;
+  primary_image: string | null;
+}
+
 const NewArrival = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
+          { cache: "no-store" }
+        );
+
+        const json = await res.json();
+
+        const mapped = json.data.map((p: ApiProduct) => {
+          const image = p.primary_image
+            ? `${process.env.NEXT_PUBLIC_STORAGE_URL}/${p.primary_image}`
+            : "/images/placeholder.png";
+
+          return {
+            id: p.id,
+            title: p.name,
+            slug: p.slug,
+            reviews: 0,
+            price: p.price,
+            discountedPrice: p.price,
+            imgs: {
+              thumbnails: [image],
+              previews: [image],
+            },
+          };
+        });
+
+        setProducts(mapped);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return <div className="py-10 text-center">Loading products...</div>;
+  }
   return (
     <section className="overflow-hidden pt-15">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -48,7 +105,7 @@ const NewArrival = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
           {/* <!-- New Arrivals item --> */}
-          {shopData.map((item, key) => (
+          {products.map((item, key) => (
             <ProductItem item={item} key={key} />
           ))}
         </div>

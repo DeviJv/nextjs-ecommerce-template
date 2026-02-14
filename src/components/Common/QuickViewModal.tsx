@@ -65,6 +65,7 @@ const QuickViewModal = () => {
       className={`${isModalOpen ? "z-99999" : "hidden"
         } fixed top-0 left-0 overflow-y-auto no-scrollbar w-full h-screen sm:py-20 xl:py-25 2xl:py-[230px] bg-dark/70 sm:px-8 px-4 py-5`}
     >
+      <div className="absolute inset-0 bg-gray/40 backdrop-blur-sm"></div>
       <div className="flex items-center justify-center ">
         <div className="w-full max-w-[1100px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content">
           <button
