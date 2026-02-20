@@ -10,6 +10,8 @@ import { updateproductDetails } from "@/redux/features/product-details";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import CartToast from "../Ui/Toast/CartToast";
 
 const ProductItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
@@ -61,6 +63,16 @@ const ProductItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+        <CartToast
+          action="cart"
+          title={item.title}
+          image={item.imgs.previews[0]}
+          onViewCart={() => {
+            toast.dismiss(t.id);
+          }}
+        />
+    ));
   };
 
   const handleItemToWishList = () => {
@@ -71,6 +83,16 @@ const ProductItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+     toast.custom((t) => (
+        <CartToast
+          action="wishlist"
+          title={item.title}
+          image={item.imgs.previews[0]}
+          onViewCart={() => {
+            toast.dismiss(t.id);
+          }}
+        />
+    ));
   };
 
   const handleProductDetails = () => {
