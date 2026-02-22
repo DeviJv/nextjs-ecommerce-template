@@ -1,7 +1,7 @@
 export type Product = {
   title: string;
-  description: string|null;
-  slug: string;
+   slug?: string|null;         // jadi optional
+  description?: string|null;
   reviews: number;
   price: number;
   discountedPrice: number;
