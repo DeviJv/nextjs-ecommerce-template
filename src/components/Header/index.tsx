@@ -369,7 +369,7 @@ const Header = () => {
                   </a>
                 </li>*/}
 
-                <li className="py-4">
+                {/* <li className="py-4">
                   <Link
                     href="/wishlist"
                     className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-blue"
@@ -389,7 +389,7 @@ const Header = () => {
                     </svg>
                     Wishlist
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             {/* <!--=== Nav Right End ===--> */}

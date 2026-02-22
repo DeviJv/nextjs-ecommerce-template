@@ -6,6 +6,8 @@ import { removeItemFromWishlist } from "@/redux/features/wishlist-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
 
 import Image from "next/image";
+import toast from "react-hot-toast";
+import CartToast from "../Ui/Toast/CartToast";
 
 const SingleItem = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +23,16 @@ const SingleItem = ({ item }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+        <CartToast
+          action="cart"
+          title={item.title}
+          image={item.imgs.previews[0]}
+          onViewCart={() => {
+            toast.dismiss(t.id);
+          }}
+        />
+    ));
   };
 
   return (
@@ -107,7 +119,7 @@ const SingleItem = ({ item }) => {
         <button
           onClick={() => handleAddToCart()}
           className="inline-flex text-sm text-dark gap-2 hover:text-white bg-gray-1 border border-gray-3 py-1.5 px-3 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3"
-        ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           Add to Cart
         </button>
       </div>

@@ -2,12 +2,33 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import Image from "next/image";
+import {
+  updateQuantity,
+  removeItemFromCart,
+} from "@/redux/features/cart-slice";
 
 const SingleItem = ({ item, removeItemFromCart }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleRemoveFromCart = () => {
     dispatch(removeItemFromCart(item.id));
+  };
+  const increaseQty = () => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity + 1,
+      })
+    );
+  };
+
+  const decreaseQty = () => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity - 1,
+      })
+    );
   };
 
   return (
@@ -22,7 +43,33 @@ const SingleItem = ({ item, removeItemFromCart }) => {
             <a href="#"> {item.title} </a>
           </h3>
           <p className="text-custom-sm">Price: ${item.discountedPrice}</p>
+          <div className="flex items-center gap-2 mt-2">
+            <button
+              onClick={decreaseQty}
+              disabled={item.quantity <= 1}
+              className="w-7 h-7 border rounded flex items-center justify-center"
+            >
+              -
+            </button>
+
+            <span className="min-w-[20px] text-center">
+              {item.quantity}
+            </span>
+
+            <button
+              onClick={increaseQty}
+              className="w-7 h-7 border rounded flex items-center justify-center"
+            >
+              +
+            </button>
+          </div>
+
+          {/* ITEM SUBTOTAL */}
+          <p className="text-sm font-medium mt-1">
+            Subtotal: ${item.discountedPrice * item.quantity}
+          </p>
         </div>
+        
       </div>
 
       <button

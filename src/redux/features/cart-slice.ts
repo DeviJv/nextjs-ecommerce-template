@@ -62,6 +62,13 @@ export const cart = createSlice({
     removeAllItemsFromCart: (state) => {
       state.items = [];
     },
+    updateQuantity: (state, action) => {
+      const item = state.items.find(i => i.id === action.payload.id);
+
+      if (item) {
+        item.quantity = Math.max(1, action.payload.quantity);
+      }
+    },
   },
 });
 
@@ -78,5 +85,6 @@ export const {
   removeItemFromCart,
   updateCartItemQuantity,
   removeAllItemsFromCart,
+  updateQuantity,
 } = cart.actions;
 export default cart.reducer;

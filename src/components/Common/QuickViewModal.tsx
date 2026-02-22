@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import DOMPurify from "dompurify";
+import truncate from "truncate-html";
 
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -9,7 +11,16 @@ import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { resetQuickView } from "@/redux/features/quickView-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
+import Link from "next/link";
 
+export function excerptHtml(html: string, words = 20) {
+  const clean = DOMPurify.sanitize(html);
+
+  return truncate(clean, {
+    length: words,
+    byWords: true,
+  });
+}
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
   const { openPreviewModal } = usePreviewSlider();
@@ -59,6 +70,7 @@ const QuickViewModal = () => {
       setQuantity(1);
     };
   }, [isModalOpen, closeModal]);
+  const short = excerptHtml(product.description, 25);
 
   return (
     <div
@@ -303,10 +315,11 @@ const QuickViewModal = () => {
                 </div>
               </div>
 
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has.
-              </p>
+              <div dangerouslySetInnerHTML={{ __html: short }} />
+
+              <Link className="text-blue ease-out duration-200 hover:text-dark" href={`/product/${product.slug}`}>
+                Baca selengkapnya →
+              </Link>
 
               <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
                 <div>
@@ -333,11 +346,11 @@ const QuickViewModal = () => {
                     <button
                       onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                       aria-label="button for remove product"
-                      className="flex items-center justify-center w-10 h-10 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
+                      className="flex items-center justify-center w-5 h-5 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
                       disabled={quantity < 0 && true}
                     >
                       <svg
-                        className="fill-current"
+                        className="fill-current h-3 w-3"
                         width="16"
                         height="2"
                         viewBox="0 0 16 2"
@@ -354,7 +367,7 @@ const QuickViewModal = () => {
                     </button>
 
                     <span
-                      className="flex items-center justify-center w-20 h-10 rounded-[5px] border border-gray-4 bg-white font-medium text-dark"
+                      className="flex items-center justify-center w-24 h-8 rounded-[5px] border border-gray-4 bg-white font-medium text-dark"
                       x-text="quantity"
                     >
                       {quantity}
@@ -363,10 +376,10 @@ const QuickViewModal = () => {
                     <button
                       onClick={() => setQuantity(quantity + 1)}
                       aria-label="button for add product"
-                      className="flex items-center justify-center w-10 h-10 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
+                      className="flex items-center justify-center w-5 h-5 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
                     >
                       <svg
-                        className="fill-current"
+                        className="fill-current h-3 w-3"
                         width="16"
                         height="16"
                         viewBox="0 0 16 16"
