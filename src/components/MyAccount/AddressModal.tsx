@@ -1,7 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AddressModal = ({ isOpen, closeModal }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    district: "",
+    ward: "",
+    house_number: "",
+    post_code: "",
+  });
+
   useEffect(() => {
+    if (isOpen) {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const customer = user.customer || {};
+        setFormData({
+          name: user.name || "",
+          email: user.email || "",
+          phone: customer.phone || "",
+          country: customer.country || "",
+          address: customer.address || "",
+          city: customer.city || "",
+          state: customer.state || "",
+          district: customer.district || "",
+          ward: customer.ward || "",
+          house_number: customer.house_number || "",
+          post_code: customer.post_code || "",
+        });
+      }
+    }
+
     // closing modal while clicking outside
     function handleClickOutside(event) {
       if (!event.target.closest(".modal-content")) {
@@ -18,16 +54,47 @@ const AddressModal = ({ isOpen, closeModal }) => {
     };
   }, [isOpen, closeModal]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("auth_token");
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        toast.success("Profile updated successfully!");
+        closeModal();
+        window.location.reload(); // Refresh to show updated data
+      } else {
+        const errorData = await res.json();
+        toast.error(errorData.message || "Update failed");
+      }
+    } catch (err) {
+      console.error("Update error:", err);
+      toast.error("An error occurred while updating profile");
+    }
+  };
+
   return (
     <div
       className={`fixed top-0 left-0 overflow-y-auto no-scrollbar w-full h-screen sm:py-20 xl:py-25 2xl:py-[230px] bg-dark/70 sm:px-8 px-4 py-5 ${isOpen ? "block z-99999" : "hidden"
         }`}
     >
-      <div className="flex items-center justify-center ">
-        <div
-          x-show="addressModal"
-          className="w-full max-w-[1100px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content"
-        >
+      <div className="flex items-center justify-center">
+        <div className="w-full max-w-[900px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content">
           <button
             onClick={closeModal}
             aria-label="button for close modal"
@@ -50,72 +117,154 @@ const AddressModal = ({ isOpen, closeModal }) => {
             </svg>
           </button>
 
-          <div>
-            <form>
-              <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 mb-5">
-                <div className="w-full">
-                  <label htmlFor="name" className="block mb-2.5">
-                    Name
-                  </label>
+          <h3 className="text-xl font-bold mb-6 text-dark">
+            Update Address Details
+          </h3>
 
-                  <input
-                    type="text"
-                    name="name"
-                    value="James Septimus"
-                    className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                  />
-                </div>
-
-                <div className="w-full">
-                  <label htmlFor="email" className="block mb-2.5">
-                    Email
-                  </label>
-
-                  <input
-                    type="email"
-                    name="email"
-                    value="jamse@example.com"
-                    className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                  />
-                </div>
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
               </div>
-
-              <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 mb-5">
-                <div className="w-full">
-                  <label htmlFor="phone" className="block mb-2.5">
-                    Phone
-                  </label>
-
-                  <input
-                    type="text"
-                    name="phone"
-                    value="1234 567890"
-                    className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                  />
-                </div>
-
-                <div className="w-full">
-                  <label htmlFor="address" className="block mb-2.5">
-                    Address
-                  </label>
-
-                  <input
-                    type="text"
-                    name="address"
-                    value="7398 Smoke Ranch RoadLas Vegas, Nevada 89128"
-                    className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                  />
-                </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  disabled
+                  className="rounded-md border border-gray-3 bg-gray-2 w-full py-2 px-4 outline-none opacity-70 cursor-not-allowed"
+                />
               </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Country
+                </label>
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  State / Province
+                </label>
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  City
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  District
+                </label>
+                <input
+                  type="text"
+                  name="district"
+                  value={formData.district}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Ward
+                </label>
+                <input
+                  type="text"
+                  name="ward"
+                  value={formData.ward}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  House Number
+                </label>
+                <input
+                  type="text"
+                  name="house_number"
+                  value={formData.house_number}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-custom-sm font-medium">
+                  Post Code
+                </label>
+                <input
+                  type="text"
+                  name="post_code"
+                  value={formData.post_code}
+                  onChange={handleChange}
+                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                />
+              </div>
+            </div>
 
-              <button
-                type="submit"
-                className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
-              >
-                Save Changes
-              </button>
-            </form>
-          </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-custom-sm font-medium">
+                Full Address
+              </label>
+              <textarea
+                name="address"
+                rows={2}
+                value={formData.address}
+                onChange={handleChange}
+                className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
+            >
+              Save Changes
+            </button>
+          </form>
         </div>
       </div>
     </div>

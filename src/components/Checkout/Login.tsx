@@ -1,23 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [dropdown, setDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.access_token) {
+        localStorage.setItem("auth_token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        toast.success("Signed in successfully!");
+        // Refresh page to update checkout state and hide login box
+        window.location.reload();
+      } else {
+        throw new Error(data.message || "Invalid credentials provided");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Failed to sign in. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (isLoggedIn) {
+    return null;
+  }
 
   return (
-    <div className="bg-white shadow-1 rounded-[10px]">
+    <div className="bg-white shadow-1 rounded-[10px] mb-7.5">
       <div
         onClick={() => setDropdown(!dropdown)}
-        className={`cursor-pointer flex items-center gap-0.5 py-5 px-5.5 ${
-          dropdown && "border-b border-gray-3"
-        }`}
+        className={`cursor-pointer flex items-center gap-0.5 py-5 px-5.5 ${dropdown && "border-b border-gray-3"
+          }`}
       >
         Returning customer?
         <span className="flex items-center gap-2.5 pl-1 font-medium text-dark">
           Click here to login
           <svg
-            className={`${
-              dropdown && "rotate-180"
-            } fill-current ease-out duration-200`}
+            className={`${dropdown && "rotate-180"
+              } fill-current ease-out duration-200`}
             width="22"
             height="22"
             viewBox="0 0 22 22"
@@ -36,46 +85,53 @@ const Login = () => {
 
       {/* <!-- dropdown menu --> */}
       <div
-        className={`${
-          dropdown ? "block" : "hidden"
-        } pt-7.5 pb-8.5 px-4 sm:px-8.5`}
+        className={`${dropdown ? "block" : "hidden"
+          } pt-7.5 pb-8.5 px-4 sm:px-8.5`}
       >
         <p className="text-custom-sm mb-6">
-          If you didn&apos;t Logged in, Please Log in first.
+          If you didn&apos;t log in, please log in first.
         </p>
 
         <div className="mb-5">
-          <label htmlFor="name" className="block mb-2.5">
-            Username or Email
+          <label htmlFor="login_email" className="block mb-2.5">
+            Email Address
           </label>
 
           <input
-            type="text"
-            name="name"
-            id="name"
+            type="email"
+            name="login_email"
+            id="login_email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
             className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
           />
         </div>
 
         <div className="mb-5">
-          <label htmlFor="password" className="block mb-2.5">
+          <label htmlFor="login_password" className="block mb-2.5">
             Password
           </label>
 
           <input
             type="password"
-            name="password"
-            id="password"
+            name="login_password"
+            id="login_password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="on"
+            placeholder="Enter your password"
             className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
           />
         </div>
 
         <button
-          type="submit"
-          className="inline-flex font-medium text-white bg-blue py-3 px-10.5 rounded-md ease-out duration-200 hover:bg-blue-dark"
+          type="button"
+          disabled={loading}
+          onClick={handleLogin}
+          className="inline-flex font-medium text-white bg-blue py-3 px-10.5 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </div>
     </div>

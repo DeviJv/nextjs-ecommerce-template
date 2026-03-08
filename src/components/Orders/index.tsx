@@ -2,26 +2,21 @@ import React, { useEffect, useState } from "react";
 import SingleOrder from "./SingleOrder";
 import ordersData from "./ordersData";
 
-const Orders = () => {
-  const [orders, setOrders] = useState<any>([]);
+const Orders = ({ orders: initialOrders = [] }: { orders: any[] }) => {
+  const [orders, setOrders] = useState<any>(initialOrders);
 
   useEffect(() => {
-    fetch(`/api/order`)
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data.orders);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+    if (initialOrders && initialOrders.length >= 0) {
+      setOrders(initialOrders);
+    }
+  }, [initialOrders]);
 
   return (
     <>
       <div className="w-full overflow-x-auto">
         <div className="min-w-[770px]">
           {/* <!-- order item --> */}
-          {ordersData.length > 0 && (
+          {orders.length > 0 && (
             <div className="items-center justify-between py-4.5 px-7.5 hidden md:flex ">
               <div className="min-w-[111px]">
                 <p className="text-custom-sm text-dark">Order</p>
@@ -47,8 +42,8 @@ const Orders = () => {
               </div>
             </div>
           )}
-          {ordersData.length > 0 ? (
-            ordersData.map((orderItem, key) => (
+          {orders.length > 0 ? (
+            orders.map((orderItem: any, key: number) => (
               <SingleOrder key={key} orderItem={orderItem} smallView={false} />
             ))
           ) : (
@@ -58,8 +53,8 @@ const Orders = () => {
           )}
         </div>
 
-        {ordersData.length > 0 &&
-          ordersData.map((orderItem, key) => (
+        {orders.length > 0 &&
+          orders.map((orderItem: any, key: number) => (
             <SingleOrder key={key} orderItem={orderItem} smallView={true} />
           ))}
       </div>

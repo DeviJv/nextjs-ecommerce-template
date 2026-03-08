@@ -31,44 +31,47 @@ const OrderDetails = ({ orderItem }: any) => {
       <div className="items-center justify-between border-t border-gray-3 py-5 px-7.5 hidden md:flex">
         <div className="min-w-[111px]">
           <p className="text-custom-sm text-red">
-            #{orderItem.orderId.slice(-8)}
+            #{orderItem.order_number}
           </p>
         </div>
         <div className="min-w-[175px]">
           <p className="text-custom-sm text-dark">
-            {orderItem.createdAt}
+            {new Date(orderItem.created_at).toLocaleDateString()}
           </p>
         </div>
 
         <div className="min-w-[128px]">
           <p
-            className={`inline-block text-custom-sm  py-0.5 px-2.5 rounded-[30px] capitalize ${
-              orderItem.status === "delivered"
+            className={`inline-block text-custom-sm  py-0.5 px-2.5 rounded-[30px] capitalize ${orderItem.status === "delivered"
                 ? "text-green bg-green-light-6"
                 : orderItem.status === "on-hold"
-                ? "text-red bg-red-light-6"
-                : orderItem.status === "processing"
-                ? "text-yellow bg-yellow-light-4"
-                : "Unknown Status"
-            }`}
+                  ? "text-red bg-red-light-6"
+                  : orderItem.status === "processing"
+                    ? "text-yellow bg-yellow-light-4"
+                    : "text-blue bg-blue-light-6"
+              }`}
           >
             {orderItem.status}
           </p>
         </div>
 
-        {/* <div className="min-w-[213px]">
-          <p className="text-custom-sm text-dark">{orderItem.orderTitle}</p>
-        </div> */}
-
         <div className="min-w-[113px]">
           <p className="text-custom-sm text-dark">
-            {orderItem.total}
+            {orderItem.currency} {orderItem.subtotal}
           </p>
         </div>
       </div>
-      <div className="px-7.5 w-full">
-        <p className="font-bold">Shipping Address:</p>{" "}
-        <p>942 Aspen Road Encino, CA 91316</p>
+      <div className="px-7.5 w-full flex flex-col gap-2">
+        <div>
+          <p className="font-bold">Shipping Cost:</p>
+          <p className="text-custom-sm text-dark">$250.00 (Fixed)</p>
+        </div>
+        <div>
+          <p className="font-bold">Shipping Address:</p>
+          <p className="text-custom-sm text-dark italic">
+            Customer address details are saved in profile.
+          </p>
+        </div>
       </div>
     </>
   );
