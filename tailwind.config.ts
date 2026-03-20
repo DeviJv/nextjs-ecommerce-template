@@ -11,12 +11,13 @@ const config: Config = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      "euclid-circular-a": ["Euclid Circular A"],
+      serif: ["var(--font-noto-serif)", ...defaultTheme.fontFamily.serif],
+      sans: ["var(--font-manrope)", ...defaultTheme.fontFamily.sans],
     },
     container: {
       center: true,
       padding: {
-        DEFAULT: "1rem",
+        DEFAULT: "1.5rem",
         sm: "2rem",
         xl: "0",
       },
@@ -24,8 +25,18 @@ const config: Config = {
     colors: {
       current: "currentColor",
       transparent: "transparent",
-      white: "#FFFFFF",
-      body: "#6C6F93",
+      white: "#fbf9f5", // Soft Parchment Background
+      "white-true": "#FFFFFF", // Surface Container Lowest
+      body: "#1b1c1a", // On-Surface
+      primary: {
+        DEFAULT: "#113104", // Deep Forest
+        container: "#274818",
+        content: "#ffffff",
+      },
+      secondary: {
+        DEFAULT: "#785832", // Earth Soil
+        content: "#ffffff",
+      },
       meta: {
         DEFAULT: "#F7F9FC",
         2: "#495270",
@@ -34,30 +45,30 @@ const config: Config = {
         5: "#BBBEC9",
       },
       dark: {
-        DEFAULT: "#1C274C",
+        DEFAULT: "#1b1c1a", // On-Surface
         2: "#495270",
         3: "#606882",
         4: "#8D93A5",
         5: "#BBBEC9",
       },
       gray: {
-        DEFAULT: "#F3F5F6",
-        1: "#F9FAFB",
-        2: "#F3F4F6",
-        3: "#E5E7EB",
+        DEFAULT: "#f5f3ef", // Surface Container Low
+        1: "#f5f3ef",
+        2: "#f5f3ef",
+        3: "#e6e4e0", // Surface Container High
         4: "#D1D5DB",
         5: "#9CA3AF",
         6: "#6B7280",
         7: "#374151",
       },
       blue: {
-        DEFAULT: "#3C50E0",
-        dark: "#1C3FB7",
-        light: "#5475E5",
-        "light-2": "#8099EC",
-        "light-3": "#ADBCF2",
-        "light-4": "#C3CEF6",
-        "light-5": "#E1E8FF",
+        DEFAULT: "#113104", // Primary override
+        dark: "#274818",
+        light: "#274818",
+        "light-2": "#3d5e2d",
+        "light-3": "#547442",
+        "light-4": "#6a8b57",
+        "light-5": "#81a16c",
       },
       red: {
         DEFAULT: "#F23030",
@@ -70,8 +81,8 @@ const config: Config = {
         "light-6": "#FEF3F3",
       },
       green: {
-        DEFAULT: "#22AD5C",
-        dark: "#1A8245",
+        DEFAULT: "#113104",
+        dark: "#274818",
         light: "#2CD673",
         "light-2": "#57DE8F",
         "light-3": "#82E6AC",
@@ -104,6 +115,11 @@ const config: Config = {
       ...defaultTheme.screens,
     },
     extend: {
+      borderRadius: {
+        sm: "0.25rem",
+        md: "0.75rem",
+        lg: "1rem",
+      },
       fontSize: {
         "2xs": ["10px", "17px"],
         "heading-1": ["60px", "72px"],
@@ -231,18 +247,20 @@ const config: Config = {
         1: "1",
       },
       boxShadow: {
-        1: "0px 1px 2px 0px rgba(166, 175, 195, 0.25)",
-        2: "0px 6px 24px 0px rgba(235, 238, 251, 0.40), 0px 2px 4px 0px rgba(148, 163, 184, 0.05)",
-        3: "0px 2px 16px 0px rgba(13, 10, 44, 0.12)",
+        ambient: "0 20px 40px rgba(17, 33, 4, 0.06)",
+        1: "0px 1px 2px 0px rgba(17, 33, 4, 0.05)",
+        2: "0 20px 40px rgba(17, 33, 4, 0.06)", // Ambient shadow override
+        3: "0px 2px 16px 0px rgba(17, 33, 4, 0.12)",
         testimonial:
-          "0px 0px 4px 0px rgba(148, 163, 184, 0.10), 0px 6px 12px 0px rgba(224, 227, 238, 0.45)",
-        breadcrumb: "0px 1px 0px 0px #E5E7EB, 0px -1px 0px 0px #E5E7EB",
+          "0px 0px 4px 0px rgba(17, 33, 4, 0.05), 0px 6px 12px 0px rgba(17, 33, 4, 0.1)",
+        breadcrumb: "0px 1px 0px 0px #e6e4e0, 0px -1px 0px 0px #e6e4e0",
         range:
-          "0px 0px 1px 0px rgba(33, 37, 41, 0.08), 0px 2px 2px 0px rgba(33, 37, 41, 0.06)",
-        filter: "0px 1px 0px 0px #E5E7EB",
-        list: "1px 0px 0px 0px #E5E7EB",
-        input: "inset 0 0 0 2px #3C50E0",
+          "0px 0px 1px 0px rgba(17, 33, 4, 0.08), 0px 2px 2px 0px rgba(17, 33, 4, 0.06)",
+        filter: "0px 1px 0px 0px #e6e4e0",
+        list: "1px 0px 0px 0px #e6e4e0",
+        input: "inset 0 0 0 2px #113104",
       },
+
     },
   },
   plugins: [],

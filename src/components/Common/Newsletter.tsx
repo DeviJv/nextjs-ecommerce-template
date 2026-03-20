@@ -18,10 +18,10 @@ const Newsletter = () => {
 
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 px-4 sm:px-7.5 xl:pl-12.5 xl:pr-14 py-11">
             <div className="max-w-[491px] w-full">
-              <h2 className="max-w-[399px] text-white font-bold text-lg sm:text-xl xl:text-heading-4 mb-3">
+              <h2 className="max-w-[399px] text-white-true font-serif font-bold text-lg sm:text-xl xl:text-heading-4 mb-3">
                 Don&apos;t Miss Out Latest Trends & Offers
               </h2>
-              <p className="text-white">
+              <p className="text-white-true">
                 Register to receive news about the latest offers & discount
                 codes
               </p>
@@ -35,14 +35,15 @@ const Newsletter = () => {
                     name="email"
                     id="email"
                     placeholder="Enter your email"
-                    className="w-full bg-gray-1 border border-gray-3 outline-none rounded-md placeholder:text-dark-4 py-3 px-5"
+                    className="w-full bg-white-true border border-gray-3 outline-none rounded-md placeholder:text-dark-4 py-3 px-5"
                   />
                   <button
                     type="submit"
-                    className="inline-flex justify-center py-3 px-7 text-white bg-blue font-medium rounded-md ease-out duration-200 hover:bg-blue-dark"
+                    className="btn-primary"
                   >
                     Subscribe
                   </button>
+
                 </div>
               </form>
             </div>

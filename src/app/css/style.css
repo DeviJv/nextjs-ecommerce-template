@@ -8,19 +8,35 @@
   }
 
   body {
-    @apply font-euclid-circular-a font-normal text-base text-dark-3 relative z-1;
+    @apply font-sans font-normal text-base text-dark bg-white relative z-1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 }
 
 @layer components {
   .dropdown {
-    @apply flex-col gap-0 min-w-max xl:w-[193px] mt-2 lg:mt-0 bg-white shadow-2 ease-in duration-200 py-2.5 rounded-md border border-gray-3 left-0 hidden
+    @apply flex-col gap-0 min-w-max xl:w-[193px] mt-2 lg:mt-0 bg-white-true shadow-ambient ease-in duration-200 py-2.5 rounded-md border border-gray-3 left-0 hidden
     xl:translate-y-10 xl:opacity-0 xl:invisible xl:absolute xl:flex
     xl:group-hover:opacity-100 xl:group-hover:visible;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-primary-container text-white-true rounded-md px-6 py-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-ambient active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-secondary border border-primary/15 rounded-md px-6 py-3 transition-all duration-300 hover:bg-gray-1 hover:shadow-ambient;
   }
 }
 
 @layer utilities {
+  .glassmorphism {
+    @apply bg-white/80 backdrop-blur-[20px];
+  }
+
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -31,6 +47,7 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
 
 /* third-party libraries CSS */
 

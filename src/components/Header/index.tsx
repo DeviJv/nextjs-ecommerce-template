@@ -56,10 +56,11 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 w-full z-9999 bg-white transition-all ease-in-out duration-300 ${
-        stickyMenu && "shadow"
+      className={`fixed left-0 top-0 w-full z-9999 glassmorphism transition-all ease-in-out duration-300 ${
+        stickyMenu && "shadow-ambient"
       }`}
     >
+
       <div className="max-w-[1170px] mx-auto px-4 sm:px-6 xl:px-0">
         {/* <!-- header top start --> */}
         <div
@@ -298,7 +299,8 @@ const Header = () => {
         {/* <!-- header top end --> */}
       </div>
 
-      <div className="border-t border-gray-3">
+      <div className="">
+
         <div className="max-w-[1170px] mx-auto px-4 sm:px-7.5 xl:px-0">
           <div className="flex items-center justify-between">
             {/* <!--=== Main Nav Start ===--> */}

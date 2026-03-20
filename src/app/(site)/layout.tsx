@@ -1,9 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
-import "../css/euclid-circular-a-font.css";
+import { Noto_Serif, Manrope } from "next/font/google";
 import "../css/style.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+
+const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  variable: "--font-noto-serif",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
 
 import { ModalProvider } from "../context/QuickViewModalContext";
 import { CartModalProvider } from "../context/CartSidebarModalContext";
@@ -29,8 +41,13 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body>
+    <html
+      lang="en"
+      suppressHydrationWarning={true}
+      className={`${notoSerif.variable} ${manrope.variable}`}
+    >
+      <body className="font-sans">
+
         <Toaster
           position="bottom-center"
           containerStyle={{
