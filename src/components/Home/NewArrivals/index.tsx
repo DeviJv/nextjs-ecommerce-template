@@ -13,6 +13,8 @@ interface ApiProduct {
   currency: string;
   slug: string;
   primary_image: string | null;
+  average_rating: number;
+  reviews_count: number;
 }
 
 const NewArrival = () => {
@@ -38,7 +40,9 @@ const NewArrival = () => {
             id: p.id,
             title: p.name,
             slug: p.slug,
-            reviews: 0,
+            reviews: p.reviews_count || 0,
+            average_rating: p.average_rating || 0,
+            reviews_count: p.reviews_count || 0,
             price: p.price,
             discountedPrice: p.price,
             imgs: {

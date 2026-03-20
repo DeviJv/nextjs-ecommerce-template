@@ -17,7 +17,12 @@ const SingleGridItem = ({ item }: { item: Product }) => {
 
   // update the QuickView state
   const handleQuickViewUpdate = () => {
-    dispatch(updateQuickView({ ...item }));
+    dispatch(updateQuickView({
+      ...item,
+      reviews: item.reviews_count || 0,
+      average_rating: item.average_rating || 0,
+      reviews_count: item.reviews_count || 0,
+    }));
   };
 
   // add to cart
@@ -112,39 +117,19 @@ const SingleGridItem = ({ item }: { item: Product }) => {
 
       <div className="flex items-center gap-2.5 mb-2">
         <div className="flex items-center gap-1">
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
+          {[...Array(5)].map((_, i) => (
+            <Image
+              key={i}
+              src={"/images/icons/icon-star.svg"}
+              alt="star icon"
+              width={15}
+              height={15}
+              className={i < (item.average_rating || 0) ? "" : "opacity-20 gray-star"}
+            />
+          ))}
         </div>
 
-        <p className="text-custom-sm">({item.reviews})</p>
+        <p className="text-custom-sm">({item.reviews_count || 0})</p>
       </div>
 
       <h3 className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5">

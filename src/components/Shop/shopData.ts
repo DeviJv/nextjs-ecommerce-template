@@ -3,6 +3,8 @@ const shopData: Product[] = [
   {
     title: "Havit HV-G69 USB Gamepad",
     reviews: 15,
+    average_rating: 4,
+    reviews_count: 15,
     price: 59.0,
     discountedPrice: 29.0,
     id: 1,
@@ -88,6 +90,8 @@ const shopData: Product[] = [
   {
     title: "Logitech MX Master 3 Mouse",
     reviews: 15,
+    average_rating: 4,
+    reviews_count: 15,
     price: 59.0,
     discountedPrice: 29.0,
     id: 6,
@@ -105,6 +109,8 @@ const shopData: Product[] = [
   {
     title: "Apple iPad Air 5th Gen - 64GB",
     reviews: 15,
+    average_rating: 4,
+    reviews_count: 15,
     price: 59.0,
     discountedPrice: 29.0,
     id: 7,
@@ -122,6 +128,8 @@ const shopData: Product[] = [
   {
     title: "Asus RT Dual Band Router",
     reviews: 15,
+    average_rating: 4,
+    reviews_count: 15,
     price: 59.0,
     discountedPrice: 29.0,
     id: 8,

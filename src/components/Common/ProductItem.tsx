@@ -34,7 +34,9 @@ const ProductItem = ({ item }: { item: Product }) => {
       slug: product.slug,
       title: product.name,
       description: product.description,
-      reviews: 0,
+      reviews: product.reviews_count || 0,
+      average_rating: product.average_rating || 0,
+      reviews_count: product.reviews_count || 0,
       price: product.price,
       discountedPrice: product.price,
       currency: product.currency,
@@ -169,46 +171,26 @@ const ProductItem = ({ item }: { item: Product }) => {
 
       <div className="flex items-center gap-2.5 mb-2">
         <div className="flex items-center gap-1">
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={14}
-            height={14}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={14}
-            height={14}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={14}
-            height={14}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={14}
-            height={14}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={14}
-            height={14}
-          />
+          {[...Array(5)].map((_, i) => (
+            <Image
+              key={i}
+              src={"/images/icons/icon-star.svg"}
+              alt="star icon"
+              width={14}
+              height={14}
+              className={i < (item.average_rating || 0) ? "" : "opacity-20 gray-star"}
+            />
+          ))}
         </div>
 
-        <p className="text-custom-sm">({item.reviews})</p>
+        <p className="text-custom-sm">({item.reviews_count || 0})</p>
       </div>
 
       <h3
         className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5"
         onClick={() => handleProductDetails()}
       >
-        <Link href="/shop-details"> {item.title} </Link>
+        <Link href={`/shop-details/${item.slug}`}> {item.title} </Link>
       </h3>
 
       <span className="flex items-center gap-2 font-medium text-lg">

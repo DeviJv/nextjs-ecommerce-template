@@ -7,7 +7,7 @@ import RecentlyViewdItems from "./RecentlyViewd";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { useAppSelector } from "@/redux/store";
 
-const ShopDetails = () => {
+const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
   const [activeColor, setActiveColor] = useState("blue");
   const { openPreviewModal } = usePreviewSlider();
   const [previewImg, setPreviewImg] = useState(0);
@@ -80,10 +80,12 @@ const ShopDetails = () => {
     (state) => state.productDetailsReducer.value
   );
 
-  const product = alreadyExist ? JSON.parse(alreadyExist) : productFromStorage;
+  const product = initialProduct || (alreadyExist ? JSON.parse(alreadyExist) : productFromStorage);
 
   useEffect(() => {
-    localStorage.setItem("productDetails", JSON.stringify(product));
+    if (product) {
+        localStorage.setItem("productDetails", JSON.stringify(product));
+    }
   }, [product]);
 
   // pass the product here when you get the real data.
@@ -176,113 +178,32 @@ const ShopDetails = () => {
                     <div className="flex items-center gap-2.5">
                       {/* <!-- stars --> */}
                       <div className="flex items-center gap-1">
-                        <svg
-                          className="fill-[#FFA645]"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_375_9172)">
-                            <path
-                              d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_375_9172">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg
-                          className="fill-[#FFA645]"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_375_9172)">
-                            <path
-                              d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_375_9172">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg
-                          className="fill-[#FFA645]"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_375_9172)">
-                            <path
-                              d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_375_9172">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg
-                          className="fill-[#FFA645]"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_375_9172)">
-                            <path
-                              d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_375_9172">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg
-                          className="fill-[#FFA645]"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_375_9172)">
-                            <path
-                              d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_375_9172">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
+                        {[...Array(5)].map((_, i) => (
+                           <svg
+                           key={i}
+                           className={i < product.average_rating ? "fill-[#FFA645]" : "fill-gray-5"}
+                           width="18"
+                           height="18"
+                           viewBox="0 0 18 18"
+                           fill="none"
+                           xmlns="http://www.w3.org/2000/svg"
+                         >
+                           <g clipPath="url(#clip0_375_9172)">
+                             <path
+                               d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
+                               fill=""
+                             />
+                           </g>
+                           <defs>
+                             <clipPath id="clip0_375_9172">
+                               <rect width="18" height="18" fill="white" />
+                             </clipPath>
+                           </defs>
+                         </svg>
+                        ))}
                       </div>
 
-                      <span> (5 customer reviews) </span>
+                      <span> ({product.reviews_count} customer reviews) </span>
                     </div>
 
                     <div className="flex items-center gap-1.5">
@@ -727,28 +648,15 @@ const ShopDetails = () => {
                   className={`flex-col sm:flex-row gap-7.5 xl:gap-12.5 mt-12.5 ${activeTab === "tabOne" ? "flex" : "hidden"
                     }`}
                 >
-                  <div className="max-w-[670px] w-full">
+                  <div className="max-w-[1000px] w-full">
                     <h2 className="font-medium text-2xl text-dark mb-7">
-                      Specifications:
+                      Description:
                     </h2>
 
-                    <p className="mb-6">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the
-                      industry&apos;s standard dummy text ever since the 1500s,
-                      when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
-                    </p>
-                    <p className="mb-6">
-                      It has survived not only five centuries, but also the leap
-                      into electronic typesetting, remaining essentially
-                      unchanged. It was popularised in the 1960s.
-                    </p>
-                    <p>
-                      with the release of Letraset sheets containing Lorem Ipsum
-                      passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions.
-                    </p>
+                    <div 
+                      className="mb-6 product-description"
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    />
                   </div>
 
                   <div className="max-w-[447px] w-full">
@@ -923,351 +831,73 @@ const ShopDetails = () => {
                 >
                   <div className="max-w-[570px] w-full">
                     <h2 className="font-medium text-2xl text-dark mb-9">
-                      03 Review for this product
+                      {product.reviews_count} Review for this product
                     </h2>
 
                     <div className="flex flex-col gap-6">
-                      {/* <!-- review item --> */}
-                      <div className="rounded-xl bg-white shadow-1 p-4 sm:p-6">
-                        <div className="flex items-center justify-between">
-                          <a href="#" className="flex items-center gap-4">
-                            <div className="w-12.5 h-12.5 rounded-full overflow-hidden">
-                              <Image
-                                src="/images/users/user-01.jpg"
-                                alt="author"
-                                className="w-12.5 h-12.5 rounded-full overflow-hidden"
-                                width={50}
-                                height={50}
-                              />
+                      {product.reviews && product.reviews.length > 0 ? (
+                        product.reviews.map((review: any, index: number) => (
+                          <div key={index} className="rounded-xl bg-white shadow-1 p-4 sm:p-6">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                <div className="w-12.5 h-12.5 rounded-full overflow-hidden bg-gray-3 flex items-center justify-center text-dark font-bold">
+                                  {review.user_name.charAt(0)}
+                                </div>
+
+                                <div>
+                                  <h3 className="font-medium text-dark">
+                                    {review.user_name}
+                                  </h3>
+                                  <p className="text-custom-sm">
+                                    {review.date}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <span key={i} className={`cursor-pointer ${i < review.rating ? "text-[#FBB040]" : "text-gray-5"}`}>
+                                    <svg
+                                      className="fill-current"
+                                      width="15"
+                                      height="16"
+                                      viewBox="0 0 15 16"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                ))}
+                              </div>
                             </div>
 
-                            <div>
-                              <h3 className="font-medium text-dark">
-                                Davis Dorwart
-                              </h3>
-                              <p className="text-custom-sm">
-                                Serial Entrepreneur
-                              </p>
-                            </div>
-                          </a>
-
-                          <div className="flex items-center gap-1">
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
+                            <p className="text-dark mt-6">
+                              “{review.comment}’’
+                            </p>
+                            
+                            {review.photos && review.photos.length > 0 && (
+                                <div className="flex gap-2 mt-4">
+                                    {review.photos.map((photo: string, pIndex: number) => (
+                                        <div key={pIndex} className="w-20 h-20 relative rounded-md overflow-hidden bg-gray-2">
+                                            <Image 
+                                                src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} 
+                                                alt={`Review photo ${pIndex + 1}`}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                           </div>
-                        </div>
-
-                        <p className="text-dark mt-6">
-                          “Lorem ipsum dolor sit amet, adipiscing elit. Donec
-                          malesuada justo vitaeaugue suscipit beautiful
-                          vehicula’’
-                        </p>
-                      </div>
-
-                      {/* <!-- review item --> */}
-                      <div className="rounded-xl bg-white shadow-1 p-4 sm:p-6">
-                        <div className="flex items-center justify-between">
-                          <a href="#" className="flex items-center gap-4">
-                            <div className="w-12.5 h-12.5 rounded-full overflow-hidden">
-                              <Image
-                                src="/images/users/user-01.jpg"
-                                alt="author"
-                                className="w-12.5 h-12.5 rounded-full overflow-hidden"
-                                width={50}
-                                height={50}
-                              />
-                            </div>
-
-                            <div>
-                              <h3 className="font-medium text-dark">
-                                Davis Dorwart
-                              </h3>
-                              <p className="text-custom-sm">
-                                Serial Entrepreneur
-                              </p>
-                            </div>
-                          </a>
-
-                          <div className="flex items-center gap-1">
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-
-                        <p className="text-dark mt-6">
-                          “Lorem ipsum dolor sit amet, adipiscing elit. Donec
-                          malesuada justo vitaeaugue suscipit beautiful
-                          vehicula’’
-                        </p>
-                      </div>
-
-                      {/* <!-- review item --> */}
-                      <div className="rounded-xl bg-white shadow-1 p-4 sm:p-6">
-                        <div className="flex items-center justify-between">
-                          <a href="#" className="flex items-center gap-4">
-                            <div className="w-12.5 h-12.5 rounded-full overflow-hidden">
-                              <Image
-                                src="/images/users/user-01.jpg"
-                                alt="author"
-                                className="w-12.5 h-12.5 rounded-full overflow-hidden"
-                                width={50}
-                                height={50}
-                              />
-                            </div>
-
-                            <div>
-                              <h3 className="font-medium text-dark">
-                                Davis Dorwart
-                              </h3>
-                              <p className="text-custom-sm">
-                                Serial Entrepreneur
-                              </p>
-                            </div>
-                          </a>
-
-                          <div className="flex items-center gap-1">
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-
-                            <span className="cursor-pointer text-[#FBB040]">
-                              <svg
-                                className="fill-current"
-                                width="15"
-                                height="16"
-                                viewBox="0 0 15 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.6604 5.90785L9.97461 5.18335L7.85178 0.732874C7.69645 0.422375 7.28224 0.422375 7.12691 0.732874L5.00407 5.20923L0.344191 5.90785C0.0076444 5.9596 -0.121797 6.39947 0.137085 6.63235L3.52844 10.1255L2.72591 15.0158C2.67413 15.3522 3.01068 15.6368 3.32134 15.4298L7.54112 13.1269L11.735 15.4298C12.0198 15.5851 12.3822 15.3263 12.3046 15.0158L11.502 10.1255L14.8934 6.63235C15.1005 6.39947 14.9969 5.9596 14.6604 5.90785Z"
-                                  fill=""
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-
-                        <p className="text-dark mt-6">
-                          “Lorem ipsum dolor sit amet, adipiscing elit. Donec
-                          malesuada justo vitaeaugue suscipit beautiful
-                          vehicula’’
-                        </p>
-                      </div>
+                        ))
+                      ) : (
+                        <p>No reviews yet.</p>
+                      )}
                     </div>
                   </div>
 
