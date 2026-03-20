@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import Login from "./Login";
 import Shipping from "./Shipping";
@@ -10,11 +10,20 @@ import Billing from "./Billing";
 import { useSelector } from "react-redux";
 import { selectCartItems, selectTotalPrice } from "@/redux/features/cart-slice";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      toast.error("Keranjang Anda kosong. Silakan belanja terlebih dahulu.");
+      router.push("/");
+    }
+  }, [cartItems, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -115,6 +124,10 @@ const Checkout = () => {
       setLoading(false);
     }
   };
+
+  if (cartItems.length === 0) {
+    return null;
+  }
 
   return (
     <>

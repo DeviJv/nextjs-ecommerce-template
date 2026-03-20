@@ -107,34 +107,36 @@ const CartSidebarModal = () => {
             </div>
           </div>
 
-          <div className="border-t border-gray-3 bg-white pt-5 pb-4 sm:pb-7.5 lg:pb-11 mt-7.5 sticky bottom-0">
-            <div className="flex items-center justify-between gap-5 mb-6">
-              <p className="font-medium text-xl text-dark">Subtotal:</p>
+          {cartItems.length > 0 && (
+            <div className="border-t border-gray-3 bg-white pt-5 pb-4 sm:pb-7.5 lg:pb-11 mt-7.5 sticky bottom-0">
+              <div className="flex items-center justify-between gap-5 mb-6">
+                <p className="font-medium text-xl text-dark">Subtotal:</p>
 
-              <p className="font-medium text-xl text-dark">${totalPrice}</p>
+                <p className="font-medium text-xl text-dark">${totalPrice}</p>
+              </div>
+
+              <div className="flex items-center gap-4">
+                {/* <Link
+                  onClick={() => closeCartModal()}
+                  href="/cart"
+                  className="w-full flex justify-center font-medium text-white bg-blue py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-blue-dark"
+                >
+                  View Cart
+                </Link> */}
+
+                <Link
+                  href="/checkout"
+                  className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
+                >
+                  Checkout
+                </Link>
+                {/* <button onClick={handleCheckout} className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95">
+                  Pay with PayPal
+                </button> */}
+
+              </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              {/* <Link
-                onClick={() => closeCartModal()}
-                href="/cart"
-                className="w-full flex justify-center font-medium text-white bg-blue py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-blue-dark"
-              >
-                View Cart
-              </Link> */}
-
-              <Link
-                href="/checkout"
-                className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
-              >
-                Checkout
-              </Link>
-              {/* <button onClick={handleCheckout} className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95">
-                Pay with PayPal
-              </button> */}
-
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
