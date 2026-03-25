@@ -7,11 +7,12 @@ import BestSeller from "./BestSeller";
 import CounDown from "./Countdown";
 import Testimonials from "./Testimonials";
 import Newsletter from "../Common/Newsletter";
+import { HomepageData } from "@/types/homepage";
 
-const Home = () => {
+const Home = ({ homepageData }: { homepageData: HomepageData | undefined }) => {
   return (
     <main>
-      <Hero />
+      {homepageData && <Hero data={homepageData} />}
       <Categories />
       <NewArrival />
       <PromoBanner />
@@ -24,3 +25,4 @@ const Home = () => {
 };
 
 export default Home;
+
