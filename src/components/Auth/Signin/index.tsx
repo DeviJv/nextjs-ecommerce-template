@@ -37,6 +37,7 @@ const Signin = () => {
         // Store token for client-side use
         localStorage.setItem("auth_token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.user));
+        window.dispatchEvent(new Event("auth-change"));
         toast.success("Signed in successfully!");
         router.push("/");
       } else {

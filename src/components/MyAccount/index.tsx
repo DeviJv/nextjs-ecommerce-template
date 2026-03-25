@@ -66,6 +66,7 @@ const MyAccount = () => {
     } finally {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("user");
+      window.dispatchEvent(new Event("auth-change"));
       toast.success("Logged out successfully");
       router.push("/");
     }
