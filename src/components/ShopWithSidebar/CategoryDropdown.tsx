@@ -2,14 +2,21 @@
 
 import { useState } from "react";
 
-const CategoryItem = ({ category }) => {
-  const [selected, setSelected] = useState(false);
+const CategoryItem = ({ 
+  category, 
+  selected, 
+  onClick 
+}: { 
+  category: any, 
+  selected: boolean, 
+  onClick: () => void 
+}) => {
   return (
     <button
       className={`${
         selected && "text-blue"
       } group flex items-center justify-between ease-out duration-200 hover:text-blue `}
-      onClick={() => setSelected(!selected)}
+      onClick={onClick}
     >
       <div className="flex items-center gap-2">
         <div
@@ -26,7 +33,7 @@ const CategoryItem = ({ category }) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M8.33317 2.5L3.74984 7.08333L1.6665 5"
+              d="M8.33317 2.5L3.74984 7.08333L1.66650 5"
               stroke="white"
               strokeWidth="1.94437"
               strokeLinecap="round"
@@ -43,14 +50,34 @@ const CategoryItem = ({ category }) => {
           selected ? "text-white bg-blue" : "bg-gray-2"
         } inline-flex rounded-[30px] text-custom-xs px-2 ease-out duration-200 group-hover:text-white group-hover:bg-blue`}
       >
-        {category.products}
+        {category.products || category.products_count || 0}
       </span>
     </button>
   );
 };
 
-const CategoryDropdown = ({ categories }) => {
+const CategoryDropdown = ({ 
+  categories, 
+  selectedCategories = [], 
+  onCategoryChange 
+}: { 
+  categories: any[], 
+  selectedCategories?: string[], 
+  onCategoryChange?: (slugs: string[]) => void 
+}) => {
   const [toggleDropdown, setToggleDropdown] = useState(true);
+
+  const handleCategoryClick = (slug: string) => {
+    let newSelected;
+    if (selectedCategories.includes(slug)) {
+      newSelected = selectedCategories.filter(s => s !== slug);
+    } else {
+      newSelected = [...selectedCategories, slug];
+    }
+    if (onCategoryChange) {
+      onCategoryChange(newSelected);
+    }
+  }
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
@@ -96,7 +123,12 @@ const CategoryDropdown = ({ categories }) => {
         }`}
       >
         {categories.map((category, key) => (
-          <CategoryItem key={key} category={category} />
+          <CategoryItem 
+            key={key} 
+            category={category} 
+            selected={selectedCategories.includes(category.slug)} 
+            onClick={() => handleCategoryClick(category.slug)}
+          />
         ))}
       </div>
     </div>

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ProductItem from "@/components/Common/ProductItem";
+import ProductSkeleton from "@/components/Ui/Skeleton/ProductSkeleton";
 import shopData from "@/components/Shop/shopData";
 
 interface ApiProduct {
@@ -64,7 +65,17 @@ const NewArrival = () => {
   }, []);
 
   if (loading) {
-    return <div className="py-10 text-center">Loading products...</div>;
+    return (
+      <section className="overflow-hidden pt-15">
+        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
+            {[...Array(4)].map((_, i) => (
+              <ProductSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
   return (
     <section className="overflow-hidden pt-15">

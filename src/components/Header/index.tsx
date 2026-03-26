@@ -9,9 +9,10 @@ import { useSelector } from "react-redux";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
+import { useSearchModal } from "@/app/context/SearchModalContext";
 
 const Header = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { openSearchModal, searchQuery, setSearchQuery } = useSearchModal();
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const { openCartModal } = useCartModalContext();
@@ -108,6 +109,8 @@ const Header = () => {
                     {/* <!-- divider --> */}
                     {/*<span className="absolute left-0 top-1/2 -translate-y-1/2 inline-block w-px h-5.5 bg-gray-4"></span>*/}
                     <input
+                      onFocus={openSearchModal}
+                      onClick={openSearchModal}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       value={searchQuery}
                       type="search"
@@ -115,7 +118,7 @@ const Header = () => {
                       id="search"
                       placeholder="I am shopping for..."
                       autoComplete="off"
-                      className=" w-full rounded-full bg-gray-1 !border-l-0 border border-gray-3 py-1.5 pl-4 pr-10 outline-none ease-in duration-200"
+                      className=" w-full rounded-full bg-gray-1 !border-l-0 border border-gray-3 py-1.5 pl-4 pr-10 outline-none ease-in duration-200 cursor-pointer"
                     />
 
                     <button

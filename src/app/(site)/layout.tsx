@@ -24,6 +24,8 @@ import QuickViewModal from "@/components/Common/QuickViewModal";
 import CartSidebarModal from "@/components/Common/CartSidebarModal";
 import { PreviewSliderProvider } from "../context/PreviewSliderContext";
 import PreviewSliderModal from "@/components/Common/PreviewSlider";
+import { SearchModalProvider } from "../context/SearchModalContext";
+import SearchModal from "@/components/Header/SearchModal";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
 import PreLoader from "@/components/Common/PreLoader";
@@ -61,14 +63,17 @@ export default function RootLayout({
             <ReduxProvider>
               <CartModalProvider>
                 <ModalProvider>
-                  <PreviewSliderProvider>
-                    <Header />
-                    {children}
+                  <SearchModalProvider>
+                    <PreviewSliderProvider>
+                      <Header />
+                      {children}
 
-                    <QuickViewModal />
-                    <CartSidebarModal />
-                    <PreviewSliderModal />
-                  </PreviewSliderProvider>
+                      <QuickViewModal />
+                      <CartSidebarModal />
+                      <PreviewSliderModal />
+                      <SearchModal />
+                    </PreviewSliderProvider>
+                  </SearchModalProvider>
                 </ModalProvider>
               </CartModalProvider>
             </ReduxProvider>

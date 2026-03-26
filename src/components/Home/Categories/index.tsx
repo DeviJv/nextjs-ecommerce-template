@@ -176,6 +176,7 @@ const Categories = () => {
                   item={{
                     id: cat.id,
                     title: cat.name,
+                    slug: cat.slug,
                     img: `${process.env.NEXT_PUBLIC_STORAGE_URL}/${cat.path}`
                   }}
                 />

@@ -236,7 +236,7 @@ const QuickViewModal = () => {
 
               <div dangerouslySetInnerHTML={{ __html: short }} />
 
-              <Link className="text-blue ease-out duration-200 hover:text-dark" href={`/product/${product.slug}`}>
+              <Link className="text-blue ease-out duration-200 hover:text-dark" href={`/shop-details/${product.slug}`}>
                 Baca selengkapnya →
               </Link>
 
