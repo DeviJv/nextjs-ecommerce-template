@@ -16,6 +16,7 @@ const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("paypal");
   const router = useRouter();
 
   useEffect(() => {
@@ -99,7 +100,9 @@ const Checkout = () => {
         headers["Authorization"] = `Bearer ${authToken}`;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout/paypal`, {
+      const endpoint = paymentMethod === "wise" ? "wise" : "paypal";
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout/${endpoint}`, {
         method: "POST",
         headers,
         body: JSON.stringify(payload),
@@ -111,11 +114,16 @@ const Checkout = () => {
         throw new Error(data.message || "Something went wrong during checkout.");
       }
 
-      if (data.redirect_url) {
-        // Redirect user to PayPal
-        window.location.href = data.redirect_url;
+      if (paymentMethod === "wise") {
+        // Redirect to success page manually with payment_number and exact amount
+        router.push(`/checkout/success?type=wise&order_id=${data.order_id}&payment_number=${data.payment_number}&amount=${data.amount_to_pay}`);
       } else {
-        toast.error("Failed to generate payment link.");
+        if (data.redirect_url) {
+          // Redirect user to PayPal
+          window.location.href = data.redirect_url;
+        } else {
+          toast.error("Failed to generate payment link.");
+        }
       }
     } catch (error: any) {
       console.error(error);
@@ -230,7 +238,7 @@ const Checkout = () => {
                 {/* <ShippingMethod /> */}
 
                 {/* <!-- payment box --> */}
-                <PaymentMethod />
+                <PaymentMethod payment={paymentMethod} setPayment={setPaymentMethod} />
 
                 {/* <!-- checkout button --> */}
                 <button

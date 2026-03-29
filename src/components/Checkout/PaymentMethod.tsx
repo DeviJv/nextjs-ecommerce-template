@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const PaymentMethod = () => {
-  const [payment, setPayment] = useState("paypal");
+interface PaymentMethodProps {
+  payment: string;
+  setPayment: (method: string) => void;
+}
+
+const PaymentMethod = ({ payment, setPayment }: PaymentMethodProps) => {
   return (
     <div className="bg-white shadow-1 rounded-[10px] mt-7.5">
       <div className="border-b border-gray-3 py-5 px-4 sm:px-8.5">
@@ -49,19 +53,20 @@ const PaymentMethod = () => {
             </div>
           </label>
           <label
-            htmlFor="bank"
+            htmlFor="wise"
             className="flex cursor-pointer select-none items-center gap-4"
           >
             <div className="relative">
               <input
                 type="checkbox"
-                name="bank"
-                id="bank"
+                name="wise"
+                id="wise"
                 className="sr-only"
-                onChange={() => setPayment("bank")}
+                onChange={() => setPayment("wise")}
+                checked={payment === "wise"}
               />
               <div
-                className={`flex h-4 w-4 items-center justify-center rounded-full ${payment === "bank"
+                className={`flex h-4 w-4 items-center justify-center rounded-full ${payment === "wise"
                   ? "border-4 border-blue"
                   : "border border-gray-4"
                   }`}
@@ -69,60 +74,26 @@ const PaymentMethod = () => {
             </div>
 
             <div
-              className={`rounded-md border-[0.5px] py-3.5 px-5 ease-out duration-200 hover:bg-gray-2 hover:border-transparent hover:shadow-none ${payment === "bank"
+              className={`rounded-md border-[0.5px] py-3.5 px-5 ease-out duration-200 hover:bg-gray-2 hover:border-transparent hover:shadow-none min-w-[240px] ${payment === "wise"
                 ? "border-transparent bg-gray-2"
                 : " border-gray-4 shadow-1"
                 }`}
             >
               <div className="flex items-center">
                 <div className="pr-2.5">
-                  <Image src="/images/checkout/bank.svg" alt="bank" width={29} height={12} />
+                  <div className="bg-[#9FE870] font-black text-[#1A1A1C] text-[13px] px-2 py-0.5 rounded-sm tracking-tight leading-none italic">
+                    wise
+                  </div>
                 </div>
 
-                <div className="border-l border-gray-4 pl-2.5">
-                  <p>Direct bank transfer</p>
-                </div>
-              </div>
-            </div>
-          </label>
-
-          <label
-            htmlFor="cash"
-            className="flex cursor-pointer select-none items-center gap-4"
-          >
-            <div className="relative">
-              <input
-                type="checkbox"
-                name="cash"
-                id="cash"
-                className="sr-only"
-                onChange={() => setPayment("cash")}
-              />
-              <div
-                className={`flex h-4 w-4 items-center justify-center rounded-full ${payment === "cash"
-                  ? "border-4 border-blue"
-                  : "border border-gray-4"
-                  }`}
-              ></div>
-            </div>
-
-            <div
-              className={`rounded-md border-[0.5px] py-3.5 px-5 ease-out duration-200 hover:bg-gray-2 hover:border-transparent hover:shadow-none min-w-[240px] ${payment === "cash"
-                ? "border-transparent bg-gray-2"
-                : " border-gray-4 shadow-1"
-                }`}
-            >
-              <div className="flex items-center">
-                <div className="pr-2.5">
-                  <Image src="/images/checkout/cash.svg" alt="cash" width={21} height={21} />
-                </div>
-
-                <div className="border-l border-gray-4 pl-2.5">
-                  <p>Cash on delivery</p>
+                <div className="border-l border-gray-4 pl-2.5 whitespace-nowrap">
+                  <p>Wise Transfer</p>
                 </div>
               </div>
             </div>
           </label>
+
+
 
 
         </div>
