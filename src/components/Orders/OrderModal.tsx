@@ -1,44 +1,72 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import OrderDetails from "./OrderDetails";
-import EditOrder from "./EditOrder";
 
-const OrderModal = ({ showDetails, showEdit, toggleModal, order }: any) => {
-  if (!showDetails && !showEdit) {
-    return null;
-  }
+const OrderModal = ({ showDetails, toggleModal, order }: any) => {
+  useEffect(() => {
+    if (showDetails) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => { document.body.style.overflow = "unset"; };
+  }, [showDetails]);
+
+  if (!showDetails) return null;
 
   return (
-    <>
-      <div
-        className={`backdrop-filter-sm visible fixed left-0 top-0 z-[99999] flex min-h-screen w-full justify-center items-center bg-[#000]/40 px-4 py-8 sm:px-8`}
-      >
-        <div className="shadow-7 relative w-full max-w-[600px] h-[242px] scale-100 transform rounded-[15px] bg-white transition-all flex flex-col justify-center items-center">
+    <div className="fixed inset-0 z-[100000] flex items-center justify-center p-4 sm:p-6 lg:p-10 transition-all duration-300">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-dark/60 backdrop-blur-sm animate-fade-in"
+        onClick={() => toggleModal(false)}
+      />
+      
+      {/* Modal Container */}
+      <div className="relative flex h-full max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-gray-2 shadow-2xl animate-scale-up">
+        {/* Header */}
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-3 bg-white-true px-6 py-5 sm:px-10 sm:py-7">
+          <div>
+            <h3 className="font-black text-dark text-xl sm:text-2xl uppercase tracking-tighter">
+              Invoice #{order.order_number}
+            </h3>
+            <p className="text-sm text-dark-5 font-bold mt-1">
+              Placed on {new Date(order.created_at).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
+            </p>
+          </div>
           <button
             onClick={() => toggleModal(false)}
-            className="text-body absolute -right-6 -top-6 z-[9999] flex h-11.5 w-11.5 items-center justify-center rounded-full border-2 border-stroke bg-white hover:text-dark"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-3 bg-gray-1 text-dark transition-all duration-300 hover:-translate-y-0.5 hover:shadow-ambient"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 25 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.9983 10.586L17.9483 5.63603L19.3623 7.05003L14.4123 12L19.3623 16.95L17.9483 18.364L12.9983 13.414L8.04828 18.364L6.63428 16.95L11.5843 12L6.63428 7.05003L8.04828 5.63603L12.9983 10.586Z"
-                fill="currentColor"
-              ></path>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
+        </div>
 
-          <>
-            {showDetails && <OrderDetails orderItem={order} />}
+        {/* Scrollable Content */}
+        <div className="no-scrollbar flex-1 overflow-y-auto bg-white-true p-6 sm:p-10">
+           <OrderDetails orderItem={order} />
+        </div>
 
-            {showEdit && <EditOrder order={order} toggleModal={toggleModal} />}
-          </>
+        {/* Footer */}
+        <div className="flex shrink-0 items-center justify-between border-t border-gray-3 bg-gray-1 px-6 py-4 sm:px-10 sm:py-6">
+           <p className="text-sm text-dark-5 font-bold uppercase tracking-widest whitespace-nowrap overflow-hidden text-ellipsis">Status: {order.status}</p>
+           <button 
+             onClick={() => toggleModal(false)}
+             className="btn-action-secondary"
+           >
+             Close Invoice
+           </button>
         </div>
       </div>
-    </>
+
+      <style jsx>{`
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        .animate-scale-up { animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+      `}</style>
+    </div>
   );
 };
 
