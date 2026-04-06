@@ -30,6 +30,10 @@ export interface HomepageData {
   features: Feature[];
   hero_top_right_image_url: string;
   hero_bottom_right_image_url: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string[];
+  og_image_url?: string;
 }
 
 export interface HomepageResponse {

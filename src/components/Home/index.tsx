@@ -14,12 +14,13 @@ const Home = ({ homepageData }: { homepageData: HomepageData | undefined }) => {
     <main>
       {homepageData && <Hero data={homepageData} />}
       <Categories />
-      <NewArrival />
-      <PromoBanner />
+      <NewArrival  />
+      {/* <PromoBanner /> */}
       <BestSeller />
-      <CounDown />
+      {/* <CounDown /> */}
+      
       <Testimonials />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </main>
   );
 };
