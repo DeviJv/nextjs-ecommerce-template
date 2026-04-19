@@ -5,8 +5,8 @@ import Login from "./Login";
 import Shipping from "./Shipping";
 import ShippingMethod from "./ShippingMethod";
 import PaymentMethod from "./PaymentMethod";
-import Coupon from "./Coupon";
 import Billing from "./Billing";
+import OrderList from "./OrderList";
 import { useSelector } from "react-redux";
 import { selectCartItems, selectTotalPrice } from "@/redux/features/cart-slice";
 import toast from "react-hot-toast";
@@ -140,114 +140,82 @@ const Checkout = () => {
   return (
     <>
       <Breadcrumb title={"Checkout"} pages={["checkout"]} />
-      <section className="overflow-hidden py-20 bg-gray-2">
-        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+      <section className="overflow-hidden py-16 bg-gray-2 min-h-screen">
+        <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8">
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-11">
-              {/* <!-- checkout left --> */}
-              <div className="lg:max-w-[670px] w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start">
+              {/* <!-- checkout left: Billing and Notes --> */}
+              <div className="lg:col-span-7 space-y-8">
                 {/* <!-- login box --> */}
                 <Login />
 
                 {/* <!-- billing details --> */}
                 <Billing />
 
-                {/* <!-- address box two --> */}
-                {/* <Shipping /> */}
-
-                {/* <!-- others note box --> */}
-                <div className="bg-white shadow-1 rounded-[10px] p-4 sm:p-8.5 mt-7.5">
+                {/* <!-- notes box --> */}
+                <div className="bg-white-true shadow-1 rounded-lg p-6 sm:p-8 border border-gray-3">
+                  <h3 className="font-medium text-lg text-dark mb-6 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-dark-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    Additional Information
+                  </h3>
                   <div>
-                    <label htmlFor="notes" className="block mb-2.5">
-                      Other Notes (optional)
+                    <label htmlFor="notes" className="block text-sm font-medium text-dark-4 mb-2">
+                      Order Notes (optional)
                     </label>
 
                     <textarea
                       name="notes"
                       id="notes"
-                      rows={5}
-                      placeholder="Notes about your order, e.g. speacial notes for delivery."
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full p-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      rows={4}
+                      placeholder="Notes about your order, e.g. special notes for delivery."
+                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full p-4 outline-none duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10 resize-none transition-all"
                     ></textarea>
                   </div>
                 </div>
               </div>
 
-              {/* // <!-- checkout right --> */}
-              <div className="max-w-[455px] w-full">
-                {/* <!-- order list box --> */}
-                <div className="bg-white shadow-1 rounded-[10px]">
-                  <div className="border-b border-gray-3 py-5 px-4 sm:px-8.5">
-                    <h3 className="font-medium text-xl text-dark">
-                      Your Order
-                    </h3>
-                  </div>
-
-                  <div className="pt-2.5 pb-8.5 px-4 sm:px-8.5">
-                    {/* <!-- title --> */}
-                    <div className="flex items-center justify-between py-5 border-b border-gray-3">
-                      <div>
-                        <h4 className="font-medium text-dark">Product</h4>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-dark text-right">
-                          Subtotal
-                        </h4>
-                      </div>
-                    </div>
-
-                    {cartItems.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between py-5 border-b border-gray-3">
-                        <div>
-                          <p className="text-dark">{item.title} <span className="text-dark-5 text-sm xl:text-base">x {item.quantity}</span></p>
-                        </div>
-                        <div>
-                          <p className="text-dark text-right">${(item.discountedPrice * item.quantity).toFixed(2)}</p>
-                        </div>
-                      </div>
-                    ))}
-
-                    {/* <!-- shipping cost --> */}
-                    <div className="flex items-center justify-between py-5 border-b border-gray-3">
-                      <div>
-                        <p className="text-dark">Shipping Cost</p>
-                      </div>
-                      <div>
-                        <p className="text-dark text-right">$250.00</p>
-                      </div>
-                    </div>
-
-                    {/* <!-- total --> */}
-                    <div className="flex items-center justify-between pt-5">
-                      <div>
-                        <p className="font-medium text-lg text-dark">Total</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-lg text-dark text-right">
-                          ${(totalPrice + 250).toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* <!-- coupon box --> */}
-                <Coupon />
-
-                {/* <!-- shipping box --> */}
-                {/* <ShippingMethod /> */}
+              {/* <!-- checkout right: Order Summary and Payment --> */}
+              <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-8">
+                {/* <!-- order summary component --> */}
+                <OrderList 
+                  cartItems={cartItems} 
+                  totalPrice={totalPrice} 
+                  shippingCost={250} 
+                />
 
                 {/* <!-- payment box --> */}
-                <PaymentMethod payment={paymentMethod} setPayment={setPaymentMethod} />
-
-                {/* <!-- checkout button --> */}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full flex justify-center font-medium text-white bg-blue py-3 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark mt-7.5 disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loading ? "Processing..." : "Process to Checkout"}
-                </button>
+                <div className="bg-white-true shadow-3 rounded-lg border border-gray-3 overflow-hidden">
+                  <div className="border-b border-gray-3 py-5 px-6 sm:px-8">
+                    <h3 className="font-semibold text-xl text-dark">
+                      Payment Method
+                    </h3>
+                  </div>
+                  <div className="p-6 sm:p-8">
+                    <PaymentMethod payment={paymentMethod} setPayment={setPaymentMethod} />
+                    
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full flex justify-center items-center gap-2 font-bold text-white bg-primary py-4 px-6 rounded-md hover:bg-primary-container transition-all duration-300 mt-8 disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                    >
+                      {loading ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        "Complete Purchase"
+                      )}
+                    </button>
+                    
+                    <p className="mt-4 text-center text-xs text-dark-5">
+                      By clicking the button, you agree to our Terms and Conditions.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </form>
