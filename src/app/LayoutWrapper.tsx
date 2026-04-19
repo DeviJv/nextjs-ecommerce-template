@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { ModalProvider } from "./context/QuickViewModalContext";
@@ -12,6 +12,7 @@ import PreviewSliderModal from "@/components/Common/PreviewSlider";
 import { SearchModalProvider } from "./context/SearchModalContext";
 import SearchModal from "@/components/Header/SearchModal";
 import ScrollToTop from "@/components/Common/ScrollToTop";
+import WhatsAppFloatingButton from "@/components/Common/WhatsAppFloatingButton";
 import PreLoader from "@/components/Common/PreLoader";
 import { Toaster } from "react-hot-toast";
 import VisitorTracker from "@/components/Common/VisitorTracker";
@@ -57,6 +58,7 @@ export default function LayoutWrapper({
         </CartModalProvider>
       </ReduxProvider>
       <ScrollToTop />
+      <WhatsAppFloatingButton />
       <Footer />
     </>
   );
