@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import Newsletter from "../Common/Newsletter";
@@ -16,19 +16,19 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
   const { openPreviewModal } = usePreviewSlider();
   const [previewImg, setPreviewImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState("tabOne");
+  const [activeTab, setActiveTab] = useState("tabThree");
 
   const dispatch = useDispatch<AppDispatch>();
+  const reviewsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToReviews = () => {
+    setActiveTab("tabThree");
+    setTimeout(() => {
+      reviewsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
 
   const tabs = [
-    {
-      id: "tabOne",
-      title: "Description",
-    },
-    {
-      id: "tabTwo",
-      title: "Additional Information",
-    },
     {
       id: "tabThree",
       title: "Reviews",
@@ -90,8 +90,10 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
   };
 
   // pass the product here when you get the real data.
-  const handlePreviewSlider = () => {
-    openPreviewModal();
+  const handlePreviewSlider = (index: number = previewImg) => {
+    if (product.imgs?.previews) {
+      openPreviewModal(product.imgs.previews, index);
+    }
   };
 
   return (
@@ -109,7 +111,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                   <div className="lg:min-h-[512px] rounded-lg shadow-1 bg-gray-2 p-4 sm:p-7.5 relative flex items-center justify-center">
                     <div>
                       <button
-                        onClick={handlePreviewSlider}
+                        onClick={() => handlePreviewSlider()}
                         aria-label="button for zoom"
                         className="gallery__Image w-11 h-11 rounded-[5px] bg-gray-1 shadow-1 flex items-center justify-center ease-out duration-200 text-dark hover:text-blue absolute top-4 lg:top-6 right-4 lg:right-6 z-50"
                       >
@@ -131,12 +133,17 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                       </button>
 
                       {product.imgs?.previews?.[previewImg] && (
-                        <Image
-                          src={product.imgs.previews[previewImg]}
-                          alt="products-details"
-                          width={400}
-                          height={400}
-                        />
+                        <div 
+                          className="cursor-zoom-in"
+                          onClick={() => handlePreviewSlider(previewImg)}
+                        >
+                          <Image
+                            src={product.imgs.previews[previewImg]}
+                            alt="products-details"
+                            width={400}
+                            height={400}
+                          />
+                        </div>
                       )}
                     </div>
                   </div>
@@ -170,42 +177,45 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                       {product.title}
                     </h2>
 
-                    <div className="inline-flex font-medium text-custom-sm text-white bg-blue rounded py-0.5 px-2.5">
+                    {/* <div className="inline-flex font-medium text-custom-sm text-white bg-blue rounded py-0.5 px-2.5">
                       30% OFF
-                    </div>
+                    </div> */}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-5.5 mb-4.5">
-                    <div className="flex items-center gap-2.5">
-                      {/* <!-- stars --> */}
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                           <svg
-                           key={i}
-                           className={i < product.average_rating ? "fill-[#FFA645]" : "fill-gray-5"}
-                           width="18"
-                           height="18"
-                           viewBox="0 0 18 18"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                         >
-                           <g clipPath="url(#clip0_375_9172)">
-                             <path
-                               d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
-                               fill=""
-                             />
-                           </g>
-                           <defs>
-                             <clipPath id="clip0_375_9172">
-                               <rect width="18" height="18" fill="white" />
-                             </clipPath>
-                           </defs>
-                         </svg>
-                        ))}
+                    <div 
+                      onClick={scrollToReviews}
+                      className="flex items-center gap-5.5 mb-4.5 cursor-pointer hover:opacity-80 transition-opacity group"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        {/* <!-- stars --> */}
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                             <svg
+                             key={i}
+                             className={i < product.average_rating ? "fill-[#FFA645]" : "fill-gray-5"}
+                             width="18"
+                             height="18"
+                             viewBox="0 0 18 18"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg"
+                           >
+                             <g clipPath="url(#clip0_375_9172)">
+                               <path
+                                 d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z"
+                                 fill=""
+                               />
+                             </g>
+                             <defs>
+                               <clipPath id="clip0_375_9172">
+                                 <rect width="18" height="18" fill="white" />
+                               </clipPath>
+                             </defs>
+                           </svg>
+                          ))}
+                        </div>
+  
+                        <span className="group-hover:text-blue transition-colors"> ({product.reviews_count} customer reviews) </span>
                       </div>
-
-                      <span> ({product.reviews_count} customer reviews) </span>
-                    </div>
 
                     <div className="flex items-center gap-1.5">
                       <svg
@@ -237,13 +247,13 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                   </div>
 
                   <h3 className="font-medium text-custom-1 mb-4.5">
-                    <span className="text-sm sm:text-base text-dark">
+                    <span className="text-lg sm:text-xl text-dark">
                       Price: ${product.price}
                     </span>
-                    <span className="line-through">
+                    {/* <span className="line-through">
                       {" "}
                       ${product.discountedPrice}{" "}
-                    </span>
+                    </span> */}
                   </h3>
 
                   <ul className="flex flex-col gap-2">
@@ -269,7 +279,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                       Free delivery available
                     </li>
 
-                    <li className="flex items-center gap-2.5">
+                    {/* <li className="flex items-center gap-2.5 text-green-600 font-medium">
                       <svg
                         width="20"
                         height="20"
@@ -279,18 +289,26 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                       >
                         <path
                           d="M13.3589 8.35863C13.603 8.11455 13.603 7.71882 13.3589 7.47475C13.1149 7.23067 12.7191 7.23067 12.4751 7.47475L8.75033 11.1995L7.5256 9.97474C7.28152 9.73067 6.8858 9.73067 6.64172 9.97474C6.39764 10.2188 6.39764 10.6146 6.64172 10.8586L8.30838 12.5253C8.55246 12.7694 8.94819 12.7694 9.19227 12.5253L13.3589 8.35863Z"
-                          fill="#113104"
+                          fill="currentColor"
                         />
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
                           d="M10.0003 1.04169C5.05277 1.04169 1.04199 5.05247 1.04199 10C1.04199 14.9476 5.05277 18.9584 10.0003 18.9584C14.9479 18.9584 18.9587 14.9476 18.9587 10C18.9587 5.05247 14.9479 1.04169 10.0003 1.04169ZM2.29199 10C2.29199 5.74283 5.74313 2.29169 10.0003 2.29169C14.2575 2.29169 17.7087 5.74283 17.7087 10C17.7087 14.2572 14.2575 17.7084 10.0003 17.7084C5.74313 17.7084 2.29199 14.2572 2.29199 10Z"
-                          fill="#113104"
+                          fill="currentColor"
                         />
                       </svg>
                       Sales 30% Off Use Code: PROMO30
-                    </li>
+                    </li> */}
                   </ul>
+
+                  <div className="mt-6 mb-8">
+                    <h3 className="font-semibold text-dark mb-3">Description</h3>
+                    <div 
+                      className="product-description prose max-w-none text-dark-4 text-sm sm:text-base"
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    />
+                  </div>
 
                   <form onSubmit={(e) => e.preventDefault()}>
                   
@@ -403,116 +421,89 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
 
               {/* <!--== tab content start ==--> */}
               
-              {/* <!-- tab content one start --> */}
-              <div className={activeTab === "tabOne" ? "block" : "hidden"}>
-                <div className="flex flex-col md:flex-row gap-7.5 xl:gap-12.5 mt-12.5">
-                  <div className="flex-1 bg-white rounded-xl shadow-1 p-6 sm:p-10">
-                    <h2 className="font-medium text-2xl text-dark mb-7">
-                      Description
-                    </h2>
-                    <div 
-                      className="product-description prose max-w-none text-dark-4"
-                      dangerouslySetInnerHTML={{ __html: product.description }}
-                    />
 
-                    {/* <!-- 
-                    <h2 className="font-medium text-2xl text-dark mb-7 mt-10">
-                      Care & Maintenance:
-                    </h2>
-                    <p className="mb-6 text-dark-4">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the
-                      industry's standard dummy text ever since the 1500s,
-                      when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
-                    </p>
-                    <p className="text-dark-4">
-                      It has survived not only five centuries, but also the leap
-                      into electronic typesetting, remaining essentially
-                      unchanged. It was popularised in the 1960s with the release
-                      of Letraset sheets containing Lorem Ipsum passages, and
-                      more recently with desktop publishing software like Aldus
-                      PageMaker including versions of Lorem Ipsum.
-                    </p>
-                    --> */}
-                  </div>
-
-                  <div className="w-full md:max-w-[400px] bg-white rounded-xl shadow-1 p-6 sm:p-10">
-                    <h2 className="font-medium text-2xl text-dark mb-7">
-                      Shipping Info
-                    </h2>
-                    <p className="mb-4 text-dark-4">
-                      We offer worldwide shipping on all our plants. Standard delivery takes 3-5 business days. 
-                    </p>
-                    <p className="text-dark-4">
-                      Our plants are carefully packaged in eco-friendly, secure boxes to ensure they arrive at your doorstep in perfect condition.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- tab content two start --> */}
-              <div className={activeTab === "tabTwo" ? "block" : "hidden"}>
-                <div className="rounded-xl bg-white shadow-1 p-4 sm:p-10 mt-10">
-                  <h2 className="font-medium text-2xl text-dark mb-7">
-                    Additional Information
-                  </h2>
-                  {product.specifications && product.specifications.length > 0 ? (
-                    <div className="divide-y divide-gray-2 border border-gray-2 rounded-lg overflow-hidden">
-                      {product.specifications.map((spec: any, key: number) => (
-                        <div key={key} className="flex flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-gray-2">
-                          <div className="sm:w-1/3 bg-gray-1 p-4">
-                            <p className="font-semibold text-dark">{spec.label}</p>
-                          </div>
-                          <div className="sm:w-2/3 p-4">
-                            <p className="text-dark-4">{spec.value}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-400 italic">No additional specifications available for this product.</p>
-                  )}
-                </div>
-              </div>
-
-              {/* <!-- tab content three start --> */}
-              <div className={activeTab === "tabThree" ? "block" : "hidden"}>
-                <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-                  <div className="lg:col-span-7 space-y-6">
+               {/* <!-- tab content three start --> */}
+              <div 
+                ref={reviewsRef}
+                className={activeTab === "tabThree" ? "block" : "hidden"}
+              >
+                <div className="mt-10">
+                  <div className="space-y-6">
                     <h2 className="font-medium text-2xl text-dark mb-9">
                       {product.reviews_count} Reviews
                     </h2>
 
-                    <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {product.reviews && product.reviews.length > 0 ? (
                         product.reviews.map((review: any, index: number) => (
-                          <div key={index} className="rounded-xl bg-white shadow-1 p-6">
-                            <div className="flex items-center justify-between mb-4">
+                          <div key={index} className="rounded-2xl bg-white shadow-lg p-6 sm:p-8 transition-all hover:shadow-xl border border-gray-100">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                               <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-blue/10 flex items-center justify-center text-blue font-bold text-xl">
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue/20 to-blue/5 flex items-center justify-center text-blue font-bold text-2xl shadow-inner uppercase">
                                   {review.user_name?.charAt(0)}
                                 </div>
                                 <div>
-                                  <h3 className="font-bold text-dark">{review.user_name}</h3>
-                                  <p className="text-sm text-gray-400">{review.date}</p>
+                                  <h3 className="font-bold text-dark text-lg">{review.user_name}</h3>
+                                  <div className="flex items-center gap-2 mt-0.5">
+                                    <div className="flex items-center gap-0.5">
+                                      {[...Array(5)].map((_, i) => (
+                                        <svg
+                                          key={i}
+                                          className={i < review.rating ? "fill-orange-400" : "fill-gray-200"}
+                                          width="14"
+                                          height="14"
+                                          viewBox="0 0 18 18"
+                                        >
+                                          <path d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z" />
+                                        </svg>
+                                      ))}
+                                    </div>
+                                    <span className="text-xs font-medium px-2 py-0.5 bg-green-50 text-green-600 rounded-full border border-green-100">Verified Purchase</span>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-1">
-                                {[...Array(5)].map((_, i) => (
-                                  <svg
-                                    key={i}
-                                    className={i < review.rating ? "fill-orange-400" : "fill-gray-300"}
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 18 18"
-                                  >
-                                    <path d="M16.7906 6.72187L11.7 5.93438L9.39377 1.09688C9.22502 0.759375 8.77502 0.759375 8.60627 1.09688L6.30002 5.9625L1.23752 6.72187C0.871891 6.77812 0.731266 7.25625 1.01252 7.50938L4.69689 11.3063L3.82502 16.6219C3.76877 16.9875 4.13439 17.2969 4.47189 17.0719L9.05627 14.5687L13.6125 17.0719C13.9219 17.2406 14.3156 16.9594 14.2313 16.6219L13.3594 11.3063L17.0438 7.50938C17.2688 7.25625 17.1563 6.77812 16.7906 6.72187Z" />
-                                  </svg>
-                                ))}
-                              </div>
+                              <p className="text-sm text-gray-400 font-medium bg-gray-50 px-3 py-1 rounded-lg self-start sm:self-center">{review.date}</p>
                             </div>
-                            <p className="text-dark-4 italic">&quot;{review.comment}&quot;</p>
+
+                            <div className="space-y-4">
+                              <p className="text-dark-4 leading-relaxed text-base">&quot;{review.comment}&quot;</p>
+                              
+                              {/* Photos Gallery */}
+                              {review.photos && review.photos.length > 0 && (
+                                <div className="flex flex-wrap gap-3 pt-2">
+                                  {review.photos.map((photo: string, pIdx: number) => (
+                                    <div 
+                                      key={pIdx} 
+                                      className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden cursor-zoom-in border border-gray-100 shadow-sm hover:ring-2 hover:ring-blue transition-all"
+                                      onClick={() => openPreviewModal(review.photos, pIdx)}
+                                    >
+                                      <Image 
+                                        src={photo} 
+                                        alt={`Review photo ${pIdx + 1}`} 
+                                        fill 
+                                        className="object-cover"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Video Review */}
+                              {review.video && (
+                                <div className="pt-2 max-w-sm">
+                                  <div className="relative rounded-xl overflow-hidden bg-black aspect-video shadow-lg group">
+                                    <video 
+                                      controls 
+                                      className="w-full h-full object-contain"
+                                      poster={review.photos && review.photos[0] ? review.photos[0] : ""}
+                                    >
+                                      <source src={review.video} type="video/mp4" />
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         ))
                       ) : (
@@ -523,7 +514,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                     </div>
                   </div>
 
-                  <div className="lg:col-span-5">
+                  {/* <div className="lg:col-span-5">
                     <div className="bg-white rounded-xl shadow-1 p-6 sm:p-10 sticky top-25">
                       <h2 className="font-medium text-2xl text-dark mb-4">Add a Review</h2>
                       <p className="text-gray-500 mb-8 text-sm">Your email address will not be published. Required fields are marked *</p>
@@ -563,7 +554,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
                         </button>
                       </form>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* <!--== tab content end ==--> */}
@@ -571,7 +562,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
           </section>
 
           <RecentlyViewdItems />
-          <Newsletter />
+          {/* <Newsletter /> */}
         </>
       )}
     </>

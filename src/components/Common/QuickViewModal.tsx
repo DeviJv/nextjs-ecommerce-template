@@ -37,7 +37,9 @@ const QuickViewModal = () => {
   const handlePreviewSlider = () => {
     dispatch(updateproductDetails(product));
 
-    openPreviewModal();
+    if (product.imgs?.previews) {
+      openPreviewModal(product.imgs.previews, activePreview);
+    }
   };
 
   // add to cart

@@ -1,17 +1,56 @@
 "use client";
-import React from "react";
-import shopData from "@/components/Shop/shopData";
+import React, { useEffect, useState } from "react";
 import ProductItem from "@/components/Common/ProductItem";
 import Image from "next/image";
-import Link from "next/link";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useCallback, useRef } from "react";
 import "swiper/css/navigation";
 import "swiper/css";
+import { Product } from "@/types/product";
 
 const RecentlyViewdItems = () => {
-  const sliderRef = useRef(null);
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const sliderRef = useRef<any>(null);
+
+  useEffect(() => {
+    const fetchRandomProducts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL;
+        
+        const res = await fetch(`${apiUrl}/api/products?sort=random&per_page=10`, {
+          cache: "no-store",
+        });
+        
+        if (res.ok) {
+          const json = await res.json();
+          const mappedProducts = json.data.map((item: any) => ({
+            id: item.id,
+            slug: item.slug,
+            title: item.name,
+            price: item.price,
+            discountedPrice: item.price,
+            average_rating: item.average_rating || 0,
+            reviews_count: item.reviews_count || 0,
+            reviews: item.reviews_count || 0,
+            imgs: {
+              thumbnails: [`${storageUrl}/${item.primary_image}`],
+              previews: [`${storageUrl}/${item.primary_image}`],
+            },
+          }));
+          setRandomProducts(mappedProducts);
+        }
+      } catch (error) {
+        console.error("Error fetching random products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRandomProducts();
+  }, []);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -22,6 +61,18 @@ const RecentlyViewdItems = () => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue"></div>
+      </div>
+    );
+  }
+
+  if (randomProducts.length === 0) {
+    return null;
+  }
 
   return (
     <section className="overflow-hidden pt-17.5">
@@ -37,10 +88,10 @@ const RecentlyViewdItems = () => {
                   height={17}
                   alt="icon"
                 />
-                Categories
+                Recommendations
               </span>
               <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-                Browse by Category
+                Plant May You Like
               </h2>
             </div>
 
@@ -85,11 +136,22 @@ const RecentlyViewdItems = () => {
 
           <Swiper
             ref={sliderRef}
-            slidesPerView={4}
+            slidesPerView={1}
             spaceBetween={20}
             className="justify-between"
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
           >
-            {shopData.map((item, key) => (
+            {randomProducts.map((item, key) => (
               <SwiperSlide key={key}>
                 <ProductItem item={item} />
               </SwiperSlide>
