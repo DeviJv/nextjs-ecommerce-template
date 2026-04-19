@@ -48,8 +48,8 @@ const SingleListItem = ({ item }: { item: Product }) => {
   return (
     <div className="group rounded-lg bg-white shadow-1 overflow-hidden">
       <div className="flex flex-col sm:flex-row">
-        <div className="relative overflow-hidden max-w-[270px] w-full sm:min-h-[350px]">
-          <Link href={`/shop-details/${item.slug}`} className="block w-full h-full relative min-h-[200px] sm:min-h-full">
+        <div className="relative overflow-hidden w-full sm:max-w-[270px] sm:min-h-[350px] aspect-[4/3] sm:aspect-auto">
+          <Link href={`/shop-details/${item.slug}`} className="block w-full h-full relative">
             <Image 
               src={item.imgs.previews[0]} 
               alt={item.title} 
