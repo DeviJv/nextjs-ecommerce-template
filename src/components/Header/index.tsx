@@ -102,14 +102,10 @@ const Header = () => {
               />
             </Link>
 
-            <div className="max-w-[475px] w-full">
+            <div className="w-full">
               <form>
-                <div className="flex items-center rounded-full gap-2">
-                  <CustomSelect options={options} />
-
-                  <div className="relative #lg:min-w-[370px] w-full">
-                    {/* <!-- divider --> */}
-                    {/*<span className="absolute left-0 top-1/2 -translate-y-1/2 inline-block w-px h-5.5 bg-gray-4"></span>*/}
+                <div className="flex items-center rounded-full">
+                  <div className="relative w-full">
                     <input
                       onFocus={openSearchModal}
                       onClick={openSearchModal}
@@ -120,7 +116,7 @@ const Header = () => {
                       id="search"
                       placeholder="I am shopping for..."
                       autoComplete="off"
-                      className=" w-full rounded-full bg-gray-1 !border-l-0 border border-gray-3 py-1.5 pl-4 pr-10 outline-none ease-in duration-200 cursor-pointer"
+                      className=" w-full rounded-full bg-gray-1 border border-gray-3 py-1.5 pl-4 pr-10 outline-none ease-in duration-200 cursor-pointer"
                     />
 
                     <button
