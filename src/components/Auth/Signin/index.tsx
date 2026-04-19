@@ -1,13 +1,25 @@
 "use client";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 const Signin = () => {
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const verified = searchParams.get("verified");
+    if (verified === "1") {
+      toast.success("Email verified successfully! You can now sign in.");
+    } else if (verified === "0") {
+      toast.error("Email verification failed. The link may have expired.");
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +33,8 @@ const Signin = () => {
     }
 
     setLoading(true);
+    setUnverifiedEmail(null); 
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
         method: "POST",
@@ -40,6 +54,9 @@ const Signin = () => {
         window.dispatchEvent(new Event("auth-change"));
         toast.success("Signed in successfully!");
         router.push("/");
+      } else if (res.status === 403 && data.verified === false) {
+        setUnverifiedEmail(email);
+        toast.error(data.message || "Please verify your email before signing in.");
       } else {
         throw new Error(data.message || "Invalid credentials provided");
       }
@@ -47,6 +64,35 @@ const Signin = () => {
       toast.error(err.message || "Failed to sign in. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail) return;
+
+    setResending(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/email/resend`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ email: unverifiedEmail }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success(data.message || "Verification link resent! Please check your email.");
+        setUnverifiedEmail(null);
+      } else {
+        throw new Error(data.message || "Failed to resend verification email.");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Error resending verification email.");
+    } finally {
+      setResending(false);
     }
   };
 
@@ -119,6 +165,22 @@ const Signin = () => {
                 >
                   {loading ? "Signing in..." : "Sign in to account"}
                 </button>
+
+                {unverifiedEmail && (
+                  <div className="mt-4 p-4 rounded-lg bg-orange-50 border border-orange-200 text-center">
+                    <p className="text-orange-800 text-sm mb-3">
+                      Your email is not verified. Check your inbox or click below to resend.
+                    </p>
+                    <button
+                      type="button"
+                      disabled={resending}
+                      onClick={handleResendVerification}
+                      className="text-dark font-semibold hover:text-blue transition-colors text-sm underline"
+                    >
+                      {resending ? "Resending..." : "Resend Verification Email"}
+                    </button>
+                  </div>
+                )}
 
                 <a
                   href="#"
