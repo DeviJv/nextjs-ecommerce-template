@@ -16,7 +16,7 @@ const Home = ({ homepageData }: { homepageData: HomepageData | undefined }) => {
       <Categories />
       <NewArrival  />
       {/* <PromoBanner /> */}
-      <BestSeller />
+      {/* <BestSeller /> */}
       {/* <CounDown /> */}
       
       <Testimonials />

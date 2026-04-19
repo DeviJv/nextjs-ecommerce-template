@@ -1,7 +1,7 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useCallback, useRef } from "react";
-import testimonialsData from "./testimonialsData";
+import { useCallback, useRef, useEffect, useState } from "react";
+import { Review } from "@/types/review";
 import Image from "next/image";
 
 // Import Swiper styles
@@ -11,6 +11,24 @@ import SingleItem from "./SingleItem";
 
 const Testimonials = () => {
   const sliderRef = useRef(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews?limit=9`);
+      const json = await res.json();
+      setReviews(json.data || []);
+    } catch (err) {
+      console.error("Failed to fetch reviews", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -22,9 +40,23 @@ const Testimonials = () => {
     sliderRef.current.swiper.slideNext();
   }, []);
 
+  if (loading) {
+    return (
+      <section className="overflow-hidden pt-17.5">
+        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
+          <div className="py-10 text-center">Loading reviews...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (reviews.length === 0) {
+    return null; // Don't show the section if no reviews
+  }
+
   return (
-    <section className="overflow-hidden pb-16.5">
-      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+    <section className="overflow-hidden pt-17.5">
+      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
         <div className="">
           <div className="swiper testimonial-carousel common-carousel p-5">
             {/* <!-- section title --> */}
@@ -37,10 +69,10 @@ const Testimonials = () => {
                     width={17}
                     height={17}
                   />
-                  Testimonials
+                  Reviews
                 </span>
                 <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-                  User Feedbacks
+                  Our Customer Reviews
                 </h2>
               </div>
 
@@ -102,9 +134,9 @@ const Testimonials = () => {
                 },
               }}
             >
-              {testimonialsData.map((item, key) => (
+              {reviews.map((item, key) => (
                 <SwiperSlide key={key}>
-                  <SingleItem testimonial={item} />
+                  <SingleItem review={item} />
                 </SwiperSlide>
               ))}
             </Swiper>

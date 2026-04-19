@@ -11,12 +11,14 @@ import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
 import { useSearchModal } from "@/app/context/SearchModalContext";
 
+import { Employer } from "@/types/employer";
+
 const Header = () => {
   const { openSearchModal, searchQuery, setSearchQuery } = useSearchModal();
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const { openCartModal } = useCartModalContext();
-  const [company, setCompany] = useState<any>(null);
+  const [company, setCompany] = useState<Employer | null>(null);
 
   const product = useAppSelector((state) => state.cartReducer.items);
   const wishlist = useAppSelector((state) => state.wishlistReducer.items);

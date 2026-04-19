@@ -66,8 +66,8 @@ const NewArrival = () => {
 
   if (loading) {
     return (
-      <section className="overflow-hidden pt-15">
-        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+      <section className="overflow-hidden pt-17.5">
+        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
             {[...Array(4)].map((_, i) => (
               <ProductSkeleton key={i} />
@@ -78,8 +78,8 @@ const NewArrival = () => {
     );
   }
   return (
-    <section className="overflow-hidden pt-15">
-      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+    <section className="overflow-hidden pt-17.5">
+      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
         {/* <!-- section title --> */}
         <div className="mb-7 flex items-center justify-between">
           <div>
