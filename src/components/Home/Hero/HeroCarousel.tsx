@@ -52,13 +52,14 @@ const HeroCarousal = ({ sliders }: { sliders: HeroSlider[] }) => {
               </Link>
             </div>
 
-            <div className="flex-1 flex justify-center items-center">
+            <div className="relative flex-1 w-full min-h-[250px] sm:min-h-[358px] rounded-xl overflow-hidden mr-0 sm:mr-10">
               <Image
                 src={slider.image_url}
                 alt={slider.title}
-                width={351}
-                height={358}
-                className="object-contain"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
               />
             </div>
           </div>
