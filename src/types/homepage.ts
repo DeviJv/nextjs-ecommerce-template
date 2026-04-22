@@ -34,6 +34,7 @@ export interface HomepageData {
   seo_description?: string;
   seo_keywords?: string[];
   og_image_url?: string;
+  shipping_cost?: number;
 }
 
 export interface HomepageResponse {

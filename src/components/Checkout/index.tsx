@@ -17,7 +17,24 @@ const Checkout = () => {
   const totalPrice = useSelector(selectTotalPrice);
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("paypal");
+  const [shippingCost, setShippingCost] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/homepage`);
+        const result = await response.json();
+        if (result.success && result.data.shipping_cost !== undefined) {
+          setShippingCost(Number(result.data.shipping_cost));
+        }
+      } catch (error) {
+        console.error("Failed to fetch shipping cost:", error);
+      }
+    };
+
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -180,7 +197,7 @@ const Checkout = () => {
                 <OrderList 
                   cartItems={cartItems} 
                   totalPrice={totalPrice} 
-                  shippingCost={250} 
+                  shippingCost={shippingCost} 
                 />
 
                 {/* <!-- payment box --> */}
