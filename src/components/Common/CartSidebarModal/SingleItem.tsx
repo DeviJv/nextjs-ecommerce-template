@@ -7,7 +7,11 @@ import {
   removeItemFromCart,
 } from "@/redux/features/cart-slice";
 
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
+import Link from "next/link";
+
 const SingleItem = ({ item, removeItemFromCart }) => {
+  const { closeCartModal } = useCartModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleRemoveFromCart = () => {
@@ -40,7 +44,9 @@ const SingleItem = ({ item, removeItemFromCart }) => {
 
         <div>
           <h3 className="font-medium text-dark mb-1 ease-out duration-200 hover:text-blue">
-            <a href="#"> {item.title} </a>
+            <Link href={`/shop-details/${item.slug}`} onClick={() => closeCartModal()}>
+              {item.title}
+            </Link>
           </h3>
           <p className="text-custom-sm">Price: ${item.discountedPrice}</p>
           <div className="flex items-center gap-2 mt-2">
