@@ -14,7 +14,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       title: "Eco-friendly Plants & Greenery Shop | NextCommerce",
       description: "Browse our exclusive collection of high-quality indoor and outdoor plants.",
       type: "website",
-      url: `${process.env.NEXT_PUBLIC_APP_URL}/shop-with-sidebar`,
+      url: `${process.env.NEXT_PUBLIC_APP_URL}/catalog`,
     },
     twitter: {
       card: "summary_large_image",
@@ -22,7 +22,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       description: "Find your next favorite plant at NextCommerce.",
     },
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/shop-with-sidebar`,
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/catalog`,
     },
   };
 };

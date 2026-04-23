@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import toast from "react-hot-toast";
 import CartToast from "../Ui/Toast/CartToast";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
   const { openPreviewModal } = usePreviewSlider();
@@ -49,6 +50,8 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
     }
   }, [product]);
 
+  const { openCartModal } = useCartModalContext();
+
   // add to cart
   const handleAddToCart = () => {
     dispatch(
@@ -65,6 +68,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
           image={product.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
+            openCartModal();
           }}
         />
     ));

@@ -12,6 +12,9 @@ import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { resetQuickView } from "@/redux/features/quickView-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import CartToast from "../Ui/Toast/CartToast";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 export function excerptHtml(html: string, words = 20) {
   const clean = DOMPurify.sanitize(html);
@@ -23,6 +26,7 @@ export function excerptHtml(html: string, words = 20) {
 }
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
+  const { openCartModal } = useCartModalContext();
   const { openPreviewModal } = usePreviewSlider();
   const [quantity, setQuantity] = useState(1);
 
@@ -50,6 +54,18 @@ const QuickViewModal = () => {
         quantity,
       })
     );
+
+    toast.custom((t) => (
+      <CartToast
+        action="cart"
+        title={product.title}
+        image={product.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+          openCartModal();
+        }}
+      />
+    ));
 
     closeModal();
   };

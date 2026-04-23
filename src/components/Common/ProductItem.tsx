@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { Product } from "@/types/product";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
@@ -15,6 +16,7 @@ import CartToast from "../Ui/Toast/CartToast";
 
 const ProductItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
+  const { openCartModal } = useCartModalContext();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -72,6 +74,7 @@ const ProductItem = ({ item }: { item: Product }) => {
           image={item.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
+            openCartModal();
           }}
         />
     ));
@@ -92,6 +95,7 @@ const ProductItem = ({ item }: { item: Product }) => {
           image={item.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
+            // open wishlist or similar if needed, for now just dismiss
           }}
         />
     ));

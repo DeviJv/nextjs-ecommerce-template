@@ -9,9 +9,13 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import CartToast from "../Ui/Toast/CartToast";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 const SingleGridItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
+  const { openCartModal } = useCartModalContext();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -33,6 +37,17 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+      <CartToast
+        action="cart"
+        title={item.title}
+        image={item.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+          openCartModal();
+        }}
+      />
+    ));
   };
 
   const handleItemToWishList = () => {
@@ -43,6 +58,17 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+      <CartToast
+        action="wishlist"
+        title={item.title}
+        image={item.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+          // open wishlist or similar if needed, for now just dismiss
+        }}
+      />
+    ));
   };
 
   return (

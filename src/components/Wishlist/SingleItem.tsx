@@ -8,8 +8,10 @@ import { addItemToCart } from "@/redux/features/cart-slice";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import CartToast from "../Ui/Toast/CartToast";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 const SingleItem = ({ item }) => {
+  const { openCartModal } = useCartModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleRemoveFromWishlist = () => {
@@ -30,6 +32,7 @@ const SingleItem = ({ item }) => {
           image={item.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
+            openCartModal();
           }}
         />
     ));

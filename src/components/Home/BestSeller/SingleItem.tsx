@@ -9,9 +9,13 @@ import { addItemToCart } from "@/redux/features/cart-slice";
 import Image from "next/image";
 import Link from "next/link";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
+import toast from "react-hot-toast";
+import CartToast from "../../Ui/Toast/CartToast";
+import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 const SingleItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
+  const { openCartModal } = useCartModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   // update the QuickView state
@@ -32,6 +36,17 @@ const SingleItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+      <CartToast
+        action="cart"
+        title={item.title}
+        image={item.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+          openCartModal();
+        }}
+      />
+    ));
   };
 
   const handleItemToWishList = () => {
@@ -42,6 +57,16 @@ const SingleItem = ({ item }: { item: Product }) => {
         quantity: 1,
       })
     );
+    toast.custom((t) => (
+      <CartToast
+        action="wishlist"
+        title={item.title}
+        image={item.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+        }}
+      />
+    ));
   };
 
   return (
