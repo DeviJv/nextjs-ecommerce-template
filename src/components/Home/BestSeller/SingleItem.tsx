@@ -92,7 +92,7 @@ const SingleItem = ({ item }: { item: Product }) => {
               openModal();
             }}
             aria-label="button for quick view"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
+            className="flex items-center justify-center w-9 h-9 rounded-full shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
           >
             <svg
               className="fill-current"
@@ -120,7 +120,7 @@ const SingleItem = ({ item }: { item: Product }) => {
           <button
             onClick={() => handleAddToCart()}
             aria-label="button for add to cart"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
+            className="flex items-center justify-center w-9 h-9 rounded-full shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
           >
             <svg
               className="fill-current"
@@ -154,7 +154,7 @@ const SingleItem = ({ item }: { item: Product }) => {
           <button
             onClick={() => handleItemToWishList()}
             aria-label="button for add to fav"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
+            className="flex items-center justify-center w-9 h-9 rounded-full shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
           >
             <svg
               className="fill-current"

@@ -151,9 +151,27 @@ const ProductItem = ({ item }: { item: Product }) => {
 
           <button
             onClick={() => handleAddToCart()}
-            className="btn-primary"
+            className="flex items-center justify-center h-9 rounded-full bg-blue text-white ease-out duration-200 hover:bg-blue-dark w-9 sm:w-auto sm:px-4"
           >
-            Add to cart
+            <span className="hidden sm:inline-block font-medium text-2xs uppercase tracking-wider">
+              Add to cart
+            </span>
+            <span className="sm:hidden">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+              </svg>
+            </span>
           </button>
 
           <button

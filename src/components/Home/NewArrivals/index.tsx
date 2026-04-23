@@ -68,7 +68,7 @@ const NewArrival = () => {
     return (
       <section className="overflow-hidden pt-17.5">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-7.5 gap-y-6 sm:gap-y-9">
             {[...Array(4)].map((_, i) => (
               <ProductSkeleton key={i} />
             ))}
@@ -119,7 +119,7 @@ const NewArrival = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-7.5 gap-y-6 sm:gap-y-9">
           {/* <!-- New Arrivals item --> */}
           {products.map((item, key) => (
             <ProductItem item={item} key={key} />

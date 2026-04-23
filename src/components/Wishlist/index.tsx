@@ -17,36 +17,17 @@ export const Wishlist = () => {
             <button className="text-blue">Clear Wishlist Cart</button>
           </div>
 
-          <div className="bg-white rounded-[10px] shadow-1">
-            <div className="w-full overflow-x-auto">
-              <div className="min-w-[1170px]">
-                {/* <!-- table header --> */}
-                <div className="flex items-center py-5.5 px-10">
-                  <div className="min-w-[83px]"></div>
-                  <div className="min-w-[387px]">
-                    <p className="text-dark">Product</p>
-                  </div>
-
-                  <div className="min-w-[205px]">
-                    <p className="text-dark">Unit Price</p>
-                  </div>
-
-                  <div className="min-w-[265px]">
-                    <p className="text-dark">Stock Status</p>
-                  </div>
-
-                  <div className="min-w-[150px]">
-                    <p className="text-dark text-right">Action</p>
-                  </div>
-                </div>
-
-                {/* <!-- wish item --> */}
-                {wishlistItems.map((item, key) => (
-                  <SingleItem item={item} key={key} />
-                ))}
-              </div>
+          {wishlistItems.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-7.5">
+              {wishlistItems.map((item, key) => (
+                <SingleItem item={item} key={key} />
+              ))}
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-20 bg-white rounded-[10px] shadow-1">
+              <p className="text-dark-4">Your wishlist is empty.</p>
+            </div>
+          )}
         </div>
       </section>
     </>

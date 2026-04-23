@@ -6,11 +6,12 @@ import { removeItemFromWishlist } from "@/redux/features/wishlist-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
 
 import Image from "next/image";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import CartToast from "../Ui/Toast/CartToast";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
-const SingleItem = ({ item }) => {
+const SingleItem = ({ item }: { item: any }) => {
   const { openCartModal } = useCartModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -29,7 +30,7 @@ const SingleItem = ({ item }) => {
         <CartToast
           action="cart"
           title={item.title}
-          image={item.imgs.previews[0]}
+          image={item.imgs?.previews?.[0] || item.imgs?.thumbnails?.[0] || ""}
           onViewCart={() => {
             toast.dismiss(t.id);
             openCartModal();
@@ -39,92 +40,50 @@ const SingleItem = ({ item }) => {
   };
 
   return (
-    <div className="flex items-center border-t border-gray-3 py-5 px-10">
-      <div className="min-w-[83px]">
+    <div className="group bg-white rounded-lg shadow-1 overflow-hidden flex flex-col h-full relative border border-transparent hover:border-gray-3 transition-all duration-300">
+      <div className="relative aspect-[4/5] overflow-hidden bg-gray-1">
+        <Link href={`/shop-details/${item.slug}`} className="block w-full h-full relative">
+          <Image 
+            src={item.imgs?.previews?.[0] || item.imgs?.thumbnails?.[0] || ""} 
+            alt={item.title} 
+            fill 
+            className="object-cover transition-transform duration-500 group-hover:scale-110" 
+          />
+        </Link>
+
+        {/* Remove Button Overlay */}
         <button
-          onClick={() => handleRemoveFromWishlist()}
+          onClick={(e) => {
+            e.preventDefault();
+            handleRemoveFromWishlist();
+          }}
           aria-label="button for remove product from wishlist"
-          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
+          className="absolute top-3 right-3 flex items-center justify-center w-8 h-8 rounded-full bg-white text-dark shadow-1 ease-out duration-200 hover:bg-red hover:text-white"
         >
-          <svg
-            className="fill-current"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9.19509 8.22222C8.92661 7.95374 8.49131 7.95374 8.22282 8.22222C7.95433 8.49071 7.95433 8.92601 8.22282 9.1945L10.0284 11L8.22284 12.8056C7.95435 13.074 7.95435 13.5093 8.22284 13.7778C8.49133 14.0463 8.92663 14.0463 9.19511 13.7778L11.0006 11.9723L12.8061 13.7778C13.0746 14.0463 13.5099 14.0463 13.7784 13.7778C14.0469 13.5093 14.0469 13.074 13.7784 12.8055L11.9729 11L13.7784 9.19451C14.0469 8.92603 14.0469 8.49073 13.7784 8.22224C13.5099 7.95376 13.0746 7.95376 12.8062 8.22224L11.0006 10.0278L9.19509 8.22222Z"
-              fill=""
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M11.0007 1.14587C5.55835 1.14587 1.14648 5.55773 1.14648 11C1.14648 16.4423 5.55835 20.8542 11.0007 20.8542C16.443 20.8542 20.8548 16.4423 20.8548 11C20.8548 5.55773 16.443 1.14587 11.0007 1.14587ZM2.52148 11C2.52148 6.31713 6.31774 2.52087 11.0007 2.52087C15.6836 2.52087 19.4798 6.31713 19.4798 11C19.4798 15.683 15.6836 19.4792 11.0007 19.4792C6.31774 19.4792 2.52148 15.683 2.52148 11Z"
-              fill=""
-            />
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.7071 1.70711C14.0976 1.31658 14.0976 0.683417 13.7071 0.292893C13.3166 -0.0976311 12.6834 -0.0976311 12.2929 0.292893L7 5.58579L1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L5.58579 7L0.292893 12.2929C-0.0976311 12.6834 -0.0976311 13.3166 0.292893 13.7071C0.683417 14.0976 1.31658 14.0976 1.70711 13.7071L7 8.41421L12.2929 13.7071C12.6834 14.0976 13.3166 14.0976 13.7071 13.7071C14.0976 13.3166 14.0976 12.6834 13.7071 12.2929L8.41421 7L13.7071 1.70711Z" fill="currentColor"/>
           </svg>
         </button>
       </div>
 
-      <div className="min-w-[387px]">
-        <div className="flex items-center justify-between gap-5">
-          <div className="w-full flex items-center gap-5.5">
-            <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
-              <Image src={item.imgs?.thumbnails[0]} alt="product" width={200} height={200} />
-            </div>
+      <div className="p-4 sm:p-5 flex flex-col flex-grow">
+        <h3 className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5 line-clamp-2">
+          <Link href={`/shop-details/${item.slug}`}> {item.title} </Link>
+        </h3>
 
-            <div>
-              <h3 className="text-dark ease-out duration-200 hover:text-blue">
-                <a href="#"> {item.title} </a>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div className="mt-auto pt-2">
+          <span className="flex items-center gap-2 font-medium text-lg mb-4">
+            <span className="text-dark">${item.price}</span>
+          </span>
 
-      <div className="min-w-[205px]">
-        <p className="text-dark">${item.discountedPrice}</p>
-      </div>
-
-      <div className="min-w-[265px]">
-        <div className="flex items-center gap-1.5">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-      
-            xmlns="http://www.w3.org/2000/svg"
-            className=" fill-current"
+          <button
+            onClick={() => handleAddToCart()}
+            className="flex items-center justify-center w-full gap-2 font-medium text-sm text-white bg-blue py-2 px-3 rounded-lg ease-out duration-200 hover:bg-blue-dark"
           >
-            <path
-              d="M9.99935 14.7917C10.3445 14.7917 10.6243 14.5119 10.6243 14.1667V9.16669C10.6243 8.82151 10.3445 8.54169 9.99935 8.54169C9.65417 8.54169 9.37435 8.82151 9.37435 9.16669V14.1667C9.37435 14.5119 9.65417 14.7917 9.99935 14.7917Z"
-             className="fill-green"
-            />
-            <path
-              d="M9.99935 5.83335C10.4596 5.83335 10.8327 6.20645 10.8327 6.66669C10.8327 7.12692 10.4596 7.50002 9.99935 7.50002C9.53911 7.50002 9.16602 7.12692 9.16602 6.66669C9.16602 6.20645 9.53911 5.83335 9.99935 5.83335Z"
-             className="fill-green"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M1.04102 10C1.04102 5.05247 5.0518 1.04169 9.99935 1.04169C14.9469 1.04169 18.9577 5.05247 18.9577 10C18.9577 14.9476 14.9469 18.9584 9.99935 18.9584C5.0518 18.9584 1.04102 14.9476 1.04102 10ZM9.99935 2.29169C5.74215 2.29169 2.29102 5.74283 2.29102 10C2.29102 14.2572 5.74215 17.7084 9.99935 17.7084C14.2565 17.7084 17.7077 14.2572 17.7077 10C17.7077 5.74283 14.2565 2.29169 9.99935 2.29169Z"
-             className="fill-green"
-            />
-          </svg>
-
-          <span className="text-green"> In Stock </span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            Add to Cart
+          </button>
         </div>
-      </div>
-
-      <div className="min-w-[150px] flex justify-end">
-        <button
-          onClick={() => handleAddToCart()}
-          className="inline-flex text-sm text-dark gap-2 hover:text-white bg-gray-1 border border-gray-3 py-1.5 px-3 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3"
-        ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-          Add to Cart
-        </button>
       </div>
     </div>
   );

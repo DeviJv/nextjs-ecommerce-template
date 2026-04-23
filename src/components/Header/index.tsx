@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import CustomSelect from "./CustomSelect";
 import { menuData } from "./menuData";
 import Dropdown from "./Dropdown";
@@ -15,6 +16,7 @@ import { Employer } from "@/types/employer";
 
 const Header = () => {
   const { openSearchModal, searchQuery, setSearchQuery } = useSearchModal();
+  const pathname = usePathname();
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const { openCartModal } = useCartModalContext();
@@ -23,6 +25,11 @@ const Header = () => {
   const product = useAppSelector((state) => state.cartReducer.items);
   const wishlist = useAppSelector((state) => state.wishlistReducer.items);
   const totalPrice = useSelector(selectTotalPrice);
+
+  // Close navigation on route change
+  useEffect(() => {
+    setNavigationOpen(false);
+  }, [pathname]);
 
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
