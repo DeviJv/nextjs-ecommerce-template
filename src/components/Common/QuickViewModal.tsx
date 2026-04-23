@@ -11,7 +11,9 @@ import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { resetQuickView } from "@/redux/features/quickView-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
+import { addItemToWishlist } from "@/redux/features/wishlist-slice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import CartToast from "../Ui/Toast/CartToast";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
@@ -28,6 +30,7 @@ const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
   const { openCartModal } = useCartModalContext();
   const { openPreviewModal } = usePreviewSlider();
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -63,6 +66,29 @@ const QuickViewModal = () => {
         onViewCart={() => {
           toast.dismiss(t.id);
           openCartModal();
+        }}
+      />
+    ));
+
+    closeModal();
+  };
+
+  const handleAddToWishlist = () => {
+    dispatch(
+      addItemToWishlist({
+        ...product,
+        quantity: 1,
+      })
+    );
+
+    toast.custom((t) => (
+      <CartToast
+        action="wishlist"
+        title={product.title}
+        image={product.imgs.previews[0]}
+        onViewCart={() => {
+          toast.dismiss(t.id);
+          router.push("/wishlist");
         }}
       />
     ));
@@ -266,11 +292,11 @@ const QuickViewModal = () => {
 
                   <span className="flex items-center gap-2">
                     <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                      ${product.discountedPrice}
-                    </span>
-                    <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
                       ${product.price}
                     </span>
+                    {/* <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
+                      ${product.price}
+                    </span> */}
                   </span>
                 </div>
 
@@ -352,6 +378,7 @@ const QuickViewModal = () => {
                 </button>
 
                 <button
+                  onClick={handleAddToWishlist}
                   className={`inline-flex items-center gap-2 font-medium text-white bg-dark py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 `}
                 >
                   <svg

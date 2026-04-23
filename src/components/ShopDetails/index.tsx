@@ -1,5 +1,6 @@
 "use client";
 import React, { use, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import Newsletter from "../Common/Newsletter";
@@ -15,6 +16,7 @@ import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 
 const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
   const { openPreviewModal } = usePreviewSlider();
+  const router = useRouter();
   const [previewImg, setPreviewImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("tabThree");
@@ -88,6 +90,7 @@ const ShopDetails = ({ product: initialProduct }: { product?: any }) => {
           image={product.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
+            router.push("/wishlist");
           }}
         />
     ));

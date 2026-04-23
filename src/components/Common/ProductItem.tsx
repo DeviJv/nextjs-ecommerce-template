@@ -11,12 +11,14 @@ import { updateproductDetails } from "@/redux/features/product-details";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import CartToast from "../Ui/Toast/CartToast";
 
 const ProductItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
   const { openCartModal } = useCartModalContext();
+  const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -95,7 +97,7 @@ const ProductItem = ({ item }: { item: Product }) => {
           image={item.imgs.previews[0]}
           onViewCart={() => {
             toast.dismiss(t.id);
-            // open wishlist or similar if needed, for now just dismiss
+            router.push("/wishlist");
           }}
         />
     ));
@@ -205,8 +207,8 @@ const ProductItem = ({ item }: { item: Product }) => {
         </h3>
 
         <span className="flex items-center gap-2 font-medium text-lg">
-          <span className="text-dark">${item.discountedPrice}</span>
-          <span className="text-dark-4 line-through">${item.price}</span>
+          <span className="text-dark">${item.price}</span>
+          {/* <span className="text-dark-4 line-through">${item.price}</span> */}
         </span>
       </div>
     </div>
