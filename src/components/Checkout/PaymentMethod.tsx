@@ -75,6 +75,37 @@ const PaymentMethod = ({ payment, setPayment }: PaymentMethodProps) => {
           <span className="font-medium text-dark">Wise Transfer</span>
         </div>
       </label>
+
+      <label
+        htmlFor="xendit"
+        className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
+          payment === "xendit"
+            ? "border-primary bg-primary/5 shadow-sm"
+            : "border-gray-3 bg-white-true hover:border-gray-4"
+        }`}
+        onClick={() => setPayment("xendit")}
+      >
+        <div className="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-gray-3 transition-colors">
+          {payment === "xendit" && (
+            <div className="w-2.5 h-2.5 rounded-full bg-primary animate-in zoom-in duration-300"></div>
+          )}
+          <input
+            type="radio"
+            name="payment"
+            id="xendit"
+            className="sr-only"
+            checked={payment === "xendit"}
+            readOnly
+          />
+        </div>
+        
+        <div className="flex items-center gap-3 flex-1">
+          <div className="bg-[#0E43E5] font-bold text-white text-[10px] uppercase px-2 py-1 rounded-sm tracking-wide leading-none shadow-sm">
+            Xendit
+          </div>
+          <span className="font-medium text-dark">International Bank</span>
+        </div>
+      </label>
     </div>
   );
 };

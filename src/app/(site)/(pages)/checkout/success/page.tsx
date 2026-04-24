@@ -56,6 +56,14 @@ const CheckoutSuccessPage = () => {
             return;
         }
 
+        if (type === "xendit") {
+            setStatus("success");
+            setMessage("Your order has been placed successfully! We are verifying your payment.");
+            dispatch(removeAllItemsFromCart());
+            refreshUserData();
+            return;
+        }
+
         if (!token || !orderId) {
             setStatus("error");
             setMessage("Invalid payment session or missing order details.");
@@ -246,7 +254,7 @@ const CheckoutSuccessPage = () => {
                                 )}
 
                                 <button
-                                    onClick={() => router.push("/shop")}
+                                    onClick={() => router.push("/shop-with-sidebar")}
                                     className="inline-flex font-semibold text-white bg-blue py-3.5 px-10 rounded-xl transition-all hover:bg-blue-dark hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto items-center justify-center"
                                 >
                                     Continue Shopping

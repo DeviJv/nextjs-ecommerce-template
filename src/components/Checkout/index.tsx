@@ -100,7 +100,7 @@ const Checkout = () => {
         customer_state: state,
         customer_post_code: post_code,
         // Explicitly pass return_url to Next.js frontend route
-        return_url: `${window.location.origin}/checkout/success`,
+        return_url: `${window.location.origin}/checkout/success${paymentMethod === 'xendit' ? '?type=xendit' : ''}`,
         cancel_url: `${window.location.origin}/checkout/cancel`,
       };
 
@@ -117,7 +117,7 @@ const Checkout = () => {
         headers["Authorization"] = `Bearer ${authToken}`;
       }
 
-      const endpoint = paymentMethod === "wise" ? "wise" : "paypal";
+      const endpoint = paymentMethod === "wise" ? "wise" : (paymentMethod === "xendit" ? "xendit" : "paypal");
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout/${endpoint}`, {
         method: "POST",
