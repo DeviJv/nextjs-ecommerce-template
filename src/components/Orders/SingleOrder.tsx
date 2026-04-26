@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrderActions from "./OrderActions";
 import OrderModal from "./OrderModal";
 import ReviewModal from "./ReviewModal";
+import PaymentModal from "./PaymentModal";
 import toast from "react-hot-toast";
 
 const getExistingReview = (item: any) => item?.productReview || item?.product_review;
@@ -9,6 +10,7 @@ const getExistingReview = (item: any) => item?.productReview || item?.product_re
 const SingleOrder = ({ orderItem }: any) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [order, setOrder] = useState<any>(orderItem);
 
   const toggleDetails = () => setShowDetails(!showDetails);
@@ -167,8 +169,10 @@ const SingleOrder = ({ orderItem }: any) => {
               <OrderActions
                 toggleDetails={toggleDetails}
                 onReview={handleOpenReview}
+                onPayNow={() => setShowPaymentModal(true)}
                 showReviewAction={showReviewAction}
                 reviewLabel={reviewLabel}
+                isPending={order.status === "pending"}
               />
             </div>
           </div>
@@ -189,8 +193,15 @@ const SingleOrder = ({ orderItem }: any) => {
         onItemReviewed={handleItemReviewed}
         onReviewFlowCompleted={handleReviewFlowCompleted}
       />
+
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        order={order}
+      />
     </>
   );
 };
 
 export default SingleOrder;
+

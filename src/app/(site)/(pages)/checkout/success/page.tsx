@@ -254,11 +254,11 @@ const CheckoutSuccessPage = () => {
                                 )}
 
                                 <button
-                                    onClick={() => router.push("/shop-with-sidebar")}
-                                    className="inline-flex font-semibold text-white bg-blue py-3.5 px-10 rounded-xl transition-all hover:bg-blue-dark hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto items-center justify-center"
-                                >
-                                    Continue Shopping
-                                </button>
+                                onClick={() => router.push("/catalog")}
+                                className="inline-flex font-semibold text-white bg-blue py-3.5 px-10 rounded-xl transition-all hover:bg-blue-dark hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto items-center justify-center"
+                            >
+                                Continue Shopping
+                            </button>
                             </div>
                         )}
 

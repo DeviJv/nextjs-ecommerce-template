@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import Login from "./Login";
 import Shipping from "./Shipping";
@@ -7,18 +7,22 @@ import ShippingMethod from "./ShippingMethod";
 import PaymentMethod from "./PaymentMethod";
 import Billing from "./Billing";
 import OrderList from "./OrderList";
-import { useSelector } from "react-redux";
-import { selectCartItems, selectTotalPrice } from "@/redux/features/cart-slice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCartItems, selectTotalPrice, removeAllItemsFromCart } from "@/redux/features/cart-slice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("paypal");
   const [shippingCost, setShippingCost] = useState(0);
   const router = useRouter();
+  // Ref to prevent the empty-cart guard from firing when we intentionally
+  // clear the cart as part of checkout (before redirecting to payment gateway)
+  const isRedirecting = useRef(false);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -37,6 +41,8 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
+    // Skip this guard if we're currently processing a checkout redirect
+    if (isRedirecting.current) return;
     if (cartItems.length === 0) {
       toast.error("Keranjang Anda kosong. Silakan belanja terlebih dahulu.");
       router.push("/");
@@ -131,18 +137,26 @@ const Checkout = () => {
         throw new Error(data.message || "Something went wrong during checkout.");
       }
 
+      // ✅ CRITICAL: Clear cart IMMEDIATELY after order is created (before redirect)
+      // This prevents double orders if the user presses back from the payment gateway.
+      // Set the flag FIRST so the empty-cart guard useEffect does not redirect to home.
+      isRedirecting.current = true;
+      dispatch(removeAllItemsFromCart());
+
       if (paymentMethod === "wise") {
-        // Redirect to success page manually with payment_number and exact amount
+        // Redirect to success page with payment details
         router.push(`/checkout/success?type=wise&order_id=${data.order_id}&payment_number=${data.payment_number}&amount=${data.amount_to_pay}`);
       } else {
         if (data.redirect_url) {
-          // Redirect user to PayPal
+          // Redirect user to PayPal / Xendit (full page navigation)
           window.location.href = data.redirect_url;
         } else {
           toast.error("Failed to generate payment link.");
         }
       }
     } catch (error: any) {
+      // Reset the redirect flag so the empty-cart guard works again on failure
+      isRedirecting.current = false;
       console.error(error);
       toast.error(error.message || "An error occurred");
     } finally {
