@@ -207,14 +207,14 @@ const MyAccount = () => {
                   <div className="absolute bottom-0 left-0 h-24 w-24 -translate-x-4 translate-y-9 rounded-full bg-secondary/20"></div>
 
                   <div className="relative space-y-6">
-                    <div className="flex items-center justify-between gap-3">
+                    {/* <div className="flex items-center justify-between gap-3">
                       <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-custom-xs font-semibold uppercase tracking-[0.24em] text-white">
                         Member since {memberSince}
                       </span>
                       <span className="rounded-full bg-white/10 px-3 py-1 text-custom-xs font-medium text-white">
                         {completion}% ready
                       </span>
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center gap-4">
                       <div className="flex h-18 w-18 items-center justify-center rounded-[24px] bg-white/10 text-2xl font-bold text-white-true ring-1 ring-white/10 backdrop-blur-sm">
@@ -531,10 +531,6 @@ const MyAccount = () => {
                           A cleaner summary of your account.
                         </h3>
                       </div>
-
-                      <span className="rounded-full border border-gray-3 bg-gray-1 px-4 py-2 text-custom-sm font-medium text-dark-4">
-                        {activeSection?.helper}
-                      </span>
                     </div>
 
                     <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -599,15 +595,6 @@ const MyAccount = () => {
                       </h2>
                       <p className="mt-2 max-w-[560px] text-custom-sm font-medium text-dark-4">
                         Manage your purchase history and tracking.
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl bg-gray-1 px-4 py-3">
-                      <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
-                        Total
-                      </p>
-                      <p className="mt-1 text-custom-xl font-semibold text-dark">
-                        {orderCount} {orderCount === 1 ? "order" : "orders"}
                       </p>
                     </div>
                   </div>

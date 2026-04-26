@@ -166,14 +166,16 @@ const SingleOrder = ({ orderItem }: any) => {
                 </p>
               </div>
 
-              <OrderActions
-                toggleDetails={toggleDetails}
-                onReview={handleOpenReview}
-                onPayNow={() => setShowPaymentModal(true)}
-                showReviewAction={showReviewAction}
-                reviewLabel={reviewLabel}
-                isPending={order.status === "pending"}
-              />
+              <div className="flex justify-end">
+                <OrderActions
+                  toggleDetails={toggleDetails}
+                  onReview={handleOpenReview}
+                  onPayNow={() => setShowPaymentModal(true)}
+                  showReviewAction={showReviewAction}
+                  reviewLabel={reviewLabel}
+                  isPending={order.status === "pending"}
+                />
+              </div>
             </div>
           </div>
         </div>
