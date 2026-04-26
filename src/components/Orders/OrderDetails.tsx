@@ -46,20 +46,20 @@ const OrderDetails = ({ orderItem }: any) => {
                 <circle cx="12" cy="10" r="3" />
               </svg>
             </div>
-            <h4 className="font-black uppercase tracking-tight text-dark">
+            <h4 className="text-custom-xs font-semibold uppercase tracking-wider text-dark">
               Shipping Destination
             </h4>
           </div>
           <div className="space-y-1 text-dark-5">
-            <p className="mb-2 text-lg font-black text-dark">
+            <p className="mb-2 text-custom-lg font-semibold text-dark">
               {orderItem.customer?.name || "Recipient"}
             </p>
-            <p className="text-sm font-medium italic leading-relaxed">
+            <p className="text-custom-sm font-medium leading-relaxed">
               {orderItem.customer?.house_number} {orderItem.customer?.address},{" "}
               {orderItem.customer?.city || "N/A"},{" "}
               {orderItem.customer?.country || "N/A"}
             </p>
-            <p className="pt-2 text-sm font-bold text-dark-4">
+            <p className="pt-2 text-custom-xs font-semibold text-dark-4">
               Phone: {orderItem.customer?.phone || "N/A"}
             </p>
           </div>
@@ -81,17 +81,17 @@ const OrderDetails = ({ orderItem }: any) => {
                 <line x1="2" y1="10" x2="22" y2="10" />
               </svg>
             </div>
-            <h4 className="font-black uppercase tracking-tight text-dark">
+            <h4 className="text-custom-xs font-semibold uppercase tracking-wider text-dark">
               Payment & Timeline
             </h4>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <p className="mb-1 text-xs font-bold uppercase leading-none tracking-widest text-dark-4">
+                <p className="mb-1 text-custom-xs font-semibold uppercase leading-none tracking-widest text-dark-4">
                   Method
                 </p>
-                <p className="font-black capitalize text-dark">
+                <p className="text-custom-sm font-semibold capitalize text-dark">
                   {orderItem.payments?.[0]?.method || "PayPal / Credit Card"}
                 </p>
               </div>
@@ -99,7 +99,7 @@ const OrderDetails = ({ orderItem }: any) => {
                 <p className="mb-1 text-xs font-bold uppercase leading-none tracking-widest text-dark-4">
                   Status
                 </p>
-                <span className="inline-block rounded-full bg-green px-2.5 py-0.5 text-[10px] font-black uppercase text-white">
+                <span className="inline-block rounded-full bg-green px-2.5 py-0.5 text-[10px] font-semibold uppercase text-white">
                   {orderItem.payments?.[0]?.status || "Paid"}
                 </span>
               </div>
@@ -152,8 +152,8 @@ const OrderDetails = ({ orderItem }: any) => {
 
       {/* Items List */}
       <div>
-        <h4 className="mb-6 flex items-center gap-2 font-black uppercase tracking-tight text-dark">
-          <span className="h-1 w-8 rounded-full bg-dark"></span>
+        <h4 className="mb-6 flex items-center gap-2 text-custom-xs font-semibold uppercase tracking-wider text-dark">
+          <span className="h-0.5 w-8 rounded-full bg-dark"></span>
           Order Items ({orderItem.items?.length || 0})
         </h4>
         <div className="space-y-4">
@@ -185,7 +185,7 @@ const OrderDetails = ({ orderItem }: any) => {
                     <div className="flex-1">
                       <Link
                         href={`/shop-details/${item.product?.slug}`}
-                        className="line-clamp-1 text-lg font-black text-dark transition-colors hover:text-blue"
+                        className="line-clamp-1 text-custom-lg font-semibold text-dark transition-colors hover:text-blue"
                       >
                         {item.product?.name}
                       </Link>
@@ -196,14 +196,14 @@ const OrderDetails = ({ orderItem }: any) => {
                           {safeParse(item.price).toFixed(2)}
                         </span>
                       </p>
-                      <p className="mt-1 text-xs font-black uppercase tracking-widest text-blue">
+                      <p className="mt-1 text-custom-xs font-semibold uppercase tracking-widest text-blue">
                         Quantity: {item.qty || item.quantity || 0}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-4 flex w-full flex-col items-start gap-2 pr-4 sm:mt-0 sm:w-auto sm:items-end sm:text-right">
-                    <p className="text-xl font-black leading-none text-dark">
+                    <p className="text-custom-xl font-semibold leading-none text-dark">
                       {orderItem.currency}{" "}
                       {safeParse(item.total || (safeParse(item.price) * safeParse(item.qty || item.quantity))).toFixed(2)}
                     </p>
@@ -272,11 +272,11 @@ const OrderDetails = ({ orderItem }: any) => {
       {/* Summary Section */}
       <div className="flex flex-col items-end border-t-2 border-dashed border-gray-3 pt-8">
         <div className="w-full space-y-4 sm:w-80">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-xs font-black uppercase tracking-widest text-dark-5">
+          <div className="flex items-center justify-between">
+            <span className="text-custom-xs font-semibold uppercase tracking-widest text-dark-5">
               Total Items Subtotal
             </span>
-            <span className="text-lg font-black text-dark">
+            <span className="text-custom-lg font-semibold text-dark">
               {orderItem.currency} {subtotal.toFixed(2)}
             </span>
           </div>
@@ -290,10 +290,10 @@ const OrderDetails = ({ orderItem }: any) => {
           </div>
           <div className="mt-4 flex transform items-center justify-between rounded-2xl bg-dark p-6 text-white shadow-xl shadow-dark/20 transition-transform hover:scale-[1.02]">
             <div className="text-left">
-              <p className="mb-1 text-[10px] font-black uppercase tracking-[0.3em] opacity-60">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.3em] opacity-60">
                 Grand Total
               </p>
-              <p className="text-2xl font-black">
+              <p className="text-heading-6 font-semibold">
                 {orderItem.currency} {grandTotal.toFixed(2)}
               </p>
             </div>

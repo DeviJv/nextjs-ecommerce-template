@@ -26,10 +26,10 @@ const OrderModal = ({ showDetails, toggleModal, order }: any) => {
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b border-gray-3 bg-white-true px-6 py-5 sm:px-10 sm:py-7">
           <div>
-            <h3 className="font-black text-dark text-xl sm:text-2xl uppercase tracking-tighter">
+            <h3 className="text-custom-xl font-semibold text-dark sm:text-heading-6 uppercase tracking-wider">
               Invoice #{order.order_number}
             </h3>
-            <p className="text-sm text-dark-5 font-bold mt-1">
+            <p className="text-custom-xs text-dark-4 font-semibold uppercase tracking-wider mt-1">
               Placed on {new Date(order.created_at).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -48,7 +48,7 @@ const OrderModal = ({ showDetails, toggleModal, order }: any) => {
 
         {/* Footer */}
         <div className="flex shrink-0 items-center justify-between border-t border-gray-3 bg-gray-1 px-6 py-4 sm:px-10 sm:py-6">
-           <p className="text-sm text-dark-5 font-bold uppercase tracking-widest whitespace-nowrap overflow-hidden text-ellipsis">Status: {order.status}</p>
+           <p className="text-custom-xs text-dark-4 font-semibold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">Status: {order.status}</p>
            <button 
              onClick={() => toggleModal(false)}
              className="btn-action-secondary"

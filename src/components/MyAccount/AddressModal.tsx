@@ -98,7 +98,7 @@ const AddressModal = ({ isOpen, closeModal }) => {
           <button
             onClick={closeModal}
             aria-label="button for close modal"
-            className="absolute top-0 right-0 sm:top-3 sm:right-3 flex items-center justify-center w-10 h-10 rounded-full ease-in duration-150 bg-meta text-body hover:text-dark"
+            className="absolute top-0 right-0 sm:top-3 sm:right-3 flex items-center justify-center w-10 h-10 rounded-full ease-in duration-150 bg-gray-3 text-dark hover:bg-gray-4 transition-colors"
           >
             <svg
               className="fill-current"
@@ -117,14 +117,14 @@ const AddressModal = ({ isOpen, closeModal }) => {
             </svg>
           </button>
 
-          <h3 className="text-xl font-bold mb-6 text-dark">
+          <h3 className="text-custom-xl font-semibold mb-6 text-dark sm:text-heading-6">
             Update Address Details
           </h3>
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Name
                 </label>
                 <input
@@ -132,11 +132,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Email
                 </label>
                 <input
@@ -144,11 +144,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="email"
                   value={formData.email}
                   disabled
-                  className="rounded-md border border-gray-3 bg-gray-2 w-full py-2 px-4 outline-none opacity-70 cursor-not-allowed"
+                  className="rounded-2xl border border-gray-3 bg-gray-2 w-full py-3 px-4 text-custom-sm outline-none opacity-70 cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Phone
                 </label>
                 <input
@@ -156,11 +156,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Country
                 </label>
                 <input
@@ -168,11 +168,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   State / Province
                 </label>
                 <input
@@ -180,11 +180,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   City
                 </label>
                 <input
@@ -192,11 +192,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   District
                 </label>
                 <input
@@ -204,11 +204,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Ward
                 </label>
                 <input
@@ -216,11 +216,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="ward"
                   value={formData.ward}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   House Number
                 </label>
                 <input
@@ -228,11 +228,11 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="house_number"
                   value={formData.house_number}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-custom-sm font-medium">
+                <label className="block mb-2 ml-1 text-custom-xs font-semibold text-dark-4 uppercase tracking-wider">
                   Post Code
                 </label>
                 <input
@@ -240,7 +240,7 @@ const AddressModal = ({ isOpen, closeModal }) => {
                   name="post_code"
                   value={formData.post_code}
                   onChange={handleChange}
-                  className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                  className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ const AddressModal = ({ isOpen, closeModal }) => {
                 rows={2}
                 value={formData.address}
                 onChange={handleChange}
-                className="rounded-md border border-gray-3 bg-gray-1 w-full py-2 px-4 outline-none focus:border-blue"
+                className="rounded-2xl border border-gray-3 bg-gray-1 w-full py-3 px-4 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10"
               ></textarea>
             </div>
 

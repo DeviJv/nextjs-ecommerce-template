@@ -131,7 +131,7 @@ const SingleOrder = ({ orderItem }: any) => {
 
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h4 className="min-w-0 max-w-full truncate text-lg font-semibold leading-tight text-dark sm:text-xl">
+                  <h4 className="min-w-0 max-w-full truncate text-custom-lg font-semibold leading-tight text-dark">
                     Order #{order.order_number}
                   </h4>
                   <span
@@ -143,7 +143,7 @@ const SingleOrder = ({ orderItem }: any) => {
                   </span>
                 </div>
 
-                <p className="mt-2 text-sm font-medium text-dark-4">
+                <p className="mt-2 text-custom-xs font-medium text-dark-4">
                   {new Date(order.created_at).toLocaleDateString(undefined, {
                     day: "numeric",
                     month: "short",
@@ -155,10 +155,10 @@ const SingleOrder = ({ orderItem }: any) => {
 
             <div className="flex flex-col gap-3 xl:min-w-[300px]">
               <div className="rounded-[20px] border border-gray-3 bg-gray-1/70 p-4 xl:text-right">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-dark-4">
+                <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
                   Total payment
                 </p>
-                <p className="mt-2 text-2xl font-semibold leading-none text-dark sm:text-[28px]">
+                <p className="mt-2 text-custom-xl font-semibold leading-none text-dark sm:text-heading-6">
                   {currency} {grandTotal.toFixed(2)}
                 </p>
                 <p className="mt-1.5 text-xs text-dark-4">

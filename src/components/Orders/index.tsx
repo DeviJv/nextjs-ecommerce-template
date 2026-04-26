@@ -141,7 +141,7 @@ const Orders = ({ orders: initialOrders = [] }: { orders: any[] }) => {
         <>
           <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+              <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                 Showing page {currentPage} of {lastPage}
               </p>
               <p className="mt-1 text-custom-sm text-dark-4">
@@ -199,7 +199,7 @@ const Orders = ({ orders: initialOrders = [] }: { orders: any[] }) => {
                   page === "..." ? (
                     <span
                       key={`ellipsis-${index}`}
-                      className="px-2 text-sm font-semibold text-dark-4"
+                      className="px-2 text-custom-sm font-semibold text-dark-4"
                     >
                       ...
                     </span>
@@ -242,8 +242,8 @@ const Orders = ({ orders: initialOrders = [] }: { orders: any[] }) => {
               <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
           </div>
-          <p className="text-lg font-semibold text-dark">No orders found yet.</p>
-          <p className="mt-2 text-dark-5">
+          <p className="text-custom-lg font-semibold text-dark">No orders found yet.</p>
+          <p className="mt-2 text-custom-xs text-dark-5 font-medium">
             Start shopping to see your order history here.
           </p>
         </div>

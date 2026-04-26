@@ -208,10 +208,10 @@ const MyAccount = () => {
 
                   <div className="relative space-y-6">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-white">
+                      <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-custom-xs font-semibold uppercase tracking-[0.24em] text-white">
                         Member since {memberSince}
                       </span>
-                      <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
+                      <span className="rounded-full bg-white/10 px-3 py-1 text-custom-xs font-medium text-white">
                         {completion}% ready
                       </span>
                     </div>
@@ -222,7 +222,7 @@ const MyAccount = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <h2 className="truncate text-2xl font-semibold text-white-true">
+                        <h2 className="truncate text-heading-6 font-semibold text-white-true">
                           {fullName}
                         </h2>
                         <p className="mt-1 truncate text-custom-sm text-white/75">
@@ -233,19 +233,19 @@ const MyAccount = () => {
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="rounded-2xl border border-white/10 bg-white/10 p-3 backdrop-blur-sm">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-white/60">
+                        <p className="text-custom-xs uppercase tracking-[0.22em] text-white/60">
                           Orders
                         </p>
-                        <p className="mt-2 text-lg font-semibold text-white-true">
+                        <p className="mt-2 text-custom-lg font-semibold text-white-true">
                           {orderCount}
                         </p>
                       </div>
 
                       <div className="rounded-2xl border border-white/10 bg-white/10 p-3 backdrop-blur-sm">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-white/60">
+                        <p className="text-custom-xs uppercase tracking-[0.22em] text-white/60">
                           City
                         </p>
-                        <p className="mt-2 truncate text-lg font-semibold text-white-true">
+                        <p className="mt-2 truncate text-custom-lg font-semibold text-white-true">
                           {profile?.customer?.city || "Unset"}
                         </p>
                       </div>
@@ -295,11 +295,11 @@ const MyAccount = () => {
                           </span>
 
                           <span className="min-w-0">
-                            <span className="block text-sm font-semibold">
+                            <span className="block text-custom-sm font-semibold">
                               {item.label}
                             </span>
                             <span
-                              className={`mt-0.5 block text-xs ${
+                              className={`mt-0.5 block text-custom-xs ${
                                 isActive ? "text-white/70" : "text-dark-4"
                               }`}
                             >
@@ -411,15 +411,15 @@ const MyAccount = () => {
 
                   <div className="relative grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.85fr)] lg:items-end">
                     <div>
-                      <p className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-white">
+                      <p className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-custom-xs font-semibold uppercase tracking-[0.24em] text-white">
                         Account hub
                       </p>
 
-                      <h1 className="mt-4 max-w-[620px] text-[28px] font-semibold leading-tight text-white-true sm:text-[40px]">
+                      <h1 className="mt-4 max-w-[620px] text-heading-6 font-semibold leading-tight text-white-true sm:text-heading-5 lg:text-heading-4">
                         Manage your account with a calmer, more modern flow.
                       </h1>
 
-                      <p className="mt-4 max-w-[560px] text-sm leading-relaxed text-white/75 sm:text-base">
+                      <p className="mt-4 max-w-[560px] text-custom-sm leading-relaxed text-white/75 sm:text-base">
                         Review orders, keep shipping details current, and
                         update your profile from one responsive space that feels
                         polished on both desktop and mobile.
@@ -449,10 +449,10 @@ const MyAccount = () => {
                     <div className="rounded-[24px] border border-white/10 bg-white/10 p-5 backdrop-blur-sm sm:rounded-[28px] sm:p-6">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">
+                          <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-white/60">
                             Profile health
                           </p>
-                          <p className="mt-2 text-[28px] font-semibold leading-none text-white-true sm:text-3xl">
+                          <p className="mt-2 text-heading-6 font-semibold leading-none text-white-true sm:text-heading-5">
                             {completion}% complete
                           </p>
                         </div>
@@ -526,10 +526,10 @@ const MyAccount = () => {
                   <div className="rounded-[24px] border border-primary/10 bg-white-true p-5 shadow-ambient sm:rounded-[28px] sm:p-8">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                        <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                           Profile at a glance
                         </p>
-                        <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                        <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                           A cleaner summary of your account.
                         </h3>
                       </div>
@@ -551,10 +551,10 @@ const MyAccount = () => {
                   </div>
 
                   <div className="rounded-[24px] border border-secondary/10 bg-gradient-to-br from-[#f8f3ea] to-white-true p-5 shadow-ambient sm:rounded-[28px] sm:p-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                    <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                       Shipping focus
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                    <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                       Keep delivery details current.
                     </h3>
                     <p className="mt-4 text-sm leading-relaxed text-dark-4 sm:text-base">
@@ -593,10 +593,10 @@ const MyAccount = () => {
                 <div className="overflow-hidden rounded-[28px] border border-primary/10 bg-white-true shadow-ambient">
                   <div className="flex flex-col gap-4 border-b border-gray-3 px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:py-6">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                      <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                         Order center
                       </p>
-                      <h2 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                      <h2 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Track your orders in one place.
                       </h2>
                       <p className="mt-2 max-w-[560px] text-sm text-dark-4 sm:text-base">
@@ -606,10 +606,10 @@ const MyAccount = () => {
                     </div>
 
                     <div className="rounded-2xl bg-gray-1 px-4 py-3">
-                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
+                      <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
                         Total
                       </p>
-                      <p className="mt-1 text-xl font-semibold text-dark">
+                      <p className="mt-1 text-custom-xl font-semibold text-dark">
                         {orderCount} {orderCount === 1 ? "order" : "orders"}
                       </p>
                     </div>
@@ -627,10 +627,10 @@ const MyAccount = () => {
                 <div className="overflow-hidden rounded-[28px] border border-primary/10 bg-white-true shadow-ambient">
                   <div className="flex flex-col gap-4 border-b border-gray-3 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                      <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                         Shipping details
                       </p>
-                      <h2 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                      <h2 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Your current delivery address.
                       </h2>
                       <p className="mt-2 max-w-[540px] text-sm text-dark-4 sm:text-base">
@@ -664,10 +664,10 @@ const MyAccount = () => {
 
                 <div className="space-y-6">
                   <div className="rounded-[24px] border border-primary/10 bg-white-true p-5 shadow-ambient sm:rounded-[28px] sm:p-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                    <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                       Delivery readiness
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                    <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                       {addressReady
                         ? "Everything looks ready."
                         : "A few details still need attention."}
@@ -692,7 +692,7 @@ const MyAccount = () => {
                   </div>
 
                   <div className="rounded-[24px] border border-secondary/10 bg-gradient-to-br from-[#f8f4ee] to-white-true p-5 shadow-ambient sm:rounded-[28px] sm:p-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                    <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                       Quick note
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-dark-4 sm:text-base">
@@ -709,13 +709,13 @@ const MyAccount = () => {
                 }`}
               >
                 <div className="rounded-[24px] border border-primary/10 bg-white-true p-5 shadow-ambient sm:rounded-[28px] sm:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                  <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                     Account details
                   </p>
 
                   <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                      <h2 className="text-xl font-semibold text-dark sm:text-2xl">
+                      <h2 className="text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Refresh the essentials whenever you need to.
                       </h2>
                       <p className="mt-2 max-w-[640px] text-sm text-dark-4 sm:text-base">
@@ -737,10 +737,10 @@ const MyAccount = () => {
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                        <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                           Personal information
                         </p>
-                        <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                        <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                           Profile details
                         </h3>
                         <p className="mt-2 text-sm text-dark-4 sm:text-base">
@@ -808,10 +808,10 @@ const MyAccount = () => {
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+                        <p className="text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                           Security
                         </p>
-                        <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">
+                        <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                           Change password
                         </h3>
                         <p className="mt-2 text-sm text-dark-4 sm:text-base">
@@ -897,19 +897,19 @@ const MyAccount = () => {
 
 const SidebarStat = ({ label, value }: { label: string; value: string }) => (
   <div className="min-w-0 rounded-2xl border border-gray-3 bg-gray-1 p-3">
-    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-dark-4">
+    <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
       {label}
     </p>
-    <p className="mt-2 break-words text-sm font-semibold text-dark">{value}</p>
+    <p className="mt-2 break-words text-custom-sm font-semibold text-dark">{value}</p>
   </div>
 );
 
 const SnapshotItem = ({ label, value }: { label: string; value: string }) => (
   <div className="min-w-0 rounded-2xl border border-white/10 bg-white/10 p-3">
-    <p className="text-[11px] uppercase tracking-[0.22em] text-white/60">
+    <p className="text-custom-xs uppercase tracking-[0.22em] text-white/60">
       {label}
     </p>
-    <p className="mt-2 truncate text-sm font-semibold text-white-true">
+    <p className="mt-2 truncate text-custom-sm font-semibold text-white-true">
       {value}
     </p>
   </div>
@@ -949,13 +949,13 @@ const MetricCard = ({
       </svg>
     </div>
 
-    <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
+    <p className="mt-5 text-custom-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
       {label}
     </p>
-    <h3 className="mt-2 text-xl font-semibold text-dark sm:text-2xl">{value}</h3>
-    <p className="mt-3 text-sm text-dark-4 sm:text-base">{copy}</p>
+    <h3 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">{value}</h3>
+    <p className="mt-3 text-custom-sm text-dark-4 sm:text-base">{copy}</p>
 
-    <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+    <div className="mt-5 inline-flex items-center gap-2 text-custom-sm font-semibold text-primary">
       Open section
       <span className="transition-transform duration-300 group-hover:translate-x-1">
         <ArrowRightIcon />
@@ -966,10 +966,10 @@ const MetricCard = ({
 
 const SummaryRow = ({ label, value }: { label: string; value: string }) => (
   <div className="min-w-0 rounded-2xl border border-gray-3 bg-gray-1 p-4">
-    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
+    <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
       {label}
     </p>
-    <p className="mt-2 break-words text-sm font-semibold text-dark sm:text-base">
+    <p className="mt-2 break-words text-custom-sm font-semibold text-dark sm:text-base">
       {value}
     </p>
   </div>
@@ -1006,10 +1006,10 @@ const DetailItem = ({
   <div
     className={`${full ? "sm:col-span-2" : ""} min-w-0 rounded-2xl border border-gray-3 bg-gray-1 p-4`}
   >
-    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
+    <p className="text-custom-xs font-semibold uppercase tracking-[0.22em] text-dark-4">
       {label}
     </p>
-    <p className="mt-2 break-words text-sm font-medium leading-relaxed text-dark sm:text-base">
+    <p className="mt-2 break-words text-custom-sm font-medium leading-relaxed text-dark sm:text-base">
       {value}
     </p>
   </div>
@@ -1031,7 +1031,7 @@ const Input = ({
   <div className="w-full">
     <label
       htmlFor={id}
-      className="mb-2.5 ml-1 block text-[13px] font-semibold text-dark sm:text-sm"
+      className="mb-2.5 ml-1 block text-custom-xs font-semibold text-dark sm:text-custom-sm"
     >
       {label}
     </label>
@@ -1041,7 +1041,7 @@ const Input = ({
       id={id}
       defaultValue={value}
       disabled={disabled}
-      className={`w-full rounded-2xl border border-gray-3 bg-gray-1 px-4 py-3 text-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10 sm:px-4.5 sm:py-3.5 sm:text-base ${
+      className={`w-full rounded-2xl border border-gray-3 bg-gray-1 px-4 py-3 text-custom-sm outline-none transition-all duration-200 focus:border-primary focus:bg-white-true focus:ring-4 focus:ring-primary/10 sm:px-4.5 sm:py-3.5 sm:text-base ${
         disabled ? "cursor-not-allowed opacity-60" : ""
       }`}
     />
