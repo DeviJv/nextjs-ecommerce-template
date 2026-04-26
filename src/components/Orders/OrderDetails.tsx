@@ -52,15 +52,22 @@ const OrderDetails = ({ orderItem }: any) => {
           </div>
           <div className="space-y-1 text-dark-5">
             <p className="mb-2 text-custom-lg font-semibold text-dark">
-              {orderItem.customer?.name || "Recipient"}
+              {orderItem.customer?.name || orderItem.shipping_name || orderItem.name || "Recipient"}
             </p>
             <p className="text-custom-sm font-medium leading-relaxed">
-              {orderItem.customer?.house_number} {orderItem.customer?.address},{" "}
-              {orderItem.customer?.city || "N/A"},{" "}
-              {orderItem.customer?.country || "N/A"}
+              {[
+                orderItem.customer?.house_number || orderItem.house_number,
+                orderItem.customer?.address || orderItem.address || orderItem.shipping_address,
+                orderItem.customer?.ward || orderItem.ward,
+                orderItem.customer?.district || orderItem.district,
+                orderItem.customer?.city || orderItem.city || orderItem.shipping_city,
+                orderItem.customer?.state || orderItem.state || orderItem.shipping_state,
+                orderItem.customer?.post_code || orderItem.post_code || orderItem.shipping_post_code,
+                orderItem.customer?.country || orderItem.country || orderItem.shipping_country
+              ].filter(Boolean).join(", ") || "No address details available"}
             </p>
             <p className="pt-2 text-custom-xs font-semibold text-dark-4">
-              Phone: {orderItem.customer?.phone || "N/A"}
+              Phone: {orderItem.customer?.phone || orderItem.phone || orderItem.shipping_phone || "N/A"}
             </p>
           </div>
         </div>
