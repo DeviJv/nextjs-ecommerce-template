@@ -299,11 +299,11 @@ const MyAccount = () => {
                               {item.label}
                             </span>
                             <span
-                              className={`mt-0.5 block text-custom-xs ${
-                                isActive ? "text-white/70" : "text-dark-4"
+                              className={`mt-0.5 block text-custom-xs font-medium ${
+                                isActive ? "text-white/80" : "text-dark-4"
                               }`}
                             >
-                              {item.helper}
+                              {item.label === "Dashboard" ? "Overview" : item.label === "Orders" ? "History" : item.label === "Addresses" ? "Shipping" : "Settings"}
                             </span>
                           </span>
                         </button>
@@ -332,8 +332,8 @@ const MyAccount = () => {
                       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-dark-4">
                         Navigate
                       </p>
-                      <p className="mt-1 text-custom-sm text-dark-4">
-                        Jump between your profile sections.
+                      <p className="mt-1 text-custom-xs font-medium text-dark-4">
+                        Quick access to your account sections.
                       </p>
                     </div>
 
@@ -379,15 +379,15 @@ const MyAccount = () => {
                             </span>
 
                             <div className="min-w-0">
-                              <p className="text-[13px] font-semibold leading-tight sm:text-sm">
+                              <p className="text-custom-sm font-semibold leading-tight">
                                 {item.label}
                               </p>
                               <p
-                                className={`mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                                  isActive ? "text-white/70" : "text-dark-4"
+                                className={`mt-1 text-[10px] font-bold uppercase tracking-wider ${
+                                  isActive ? "text-white/80" : "text-primary/60"
                                 }`}
                               >
-                                {isActive ? "Current section" : "Open section"}
+                                {isActive ? "Active" : "View"}
                               </p>
                             </div>
                           </div>
@@ -416,13 +416,11 @@ const MyAccount = () => {
                       </p>
 
                       <h1 className="mt-4 max-w-[620px] text-heading-6 font-semibold leading-tight text-white-true sm:text-heading-5 lg:text-heading-4">
-                        Manage your account with a calmer, more modern flow.
+                        Account Overview
                       </h1>
 
-                      <p className="mt-4 max-w-[560px] text-custom-sm leading-relaxed text-white/75 sm:text-base">
-                        Review orders, keep shipping details current, and
-                        update your profile from one responsive space that feels
-                        polished on both desktop and mobile.
+                      <p className="mt-4 max-w-[480px] text-custom-sm font-medium leading-relaxed text-white/80">
+                        Manage your orders and personal details in one place.
                       </p>
 
                       <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -497,7 +495,7 @@ const MyAccount = () => {
                   <MetricCard
                     label="Recent orders"
                     value={`${orderCount} total`}
-                    copy="Review receipts, delivery state, and available actions."
+                    copy="Review your purchase history and status."
                     icon="M20 7 12 3 4 7m16 0-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                     accentClass="bg-primary/10 text-primary"
                     onClick={() => setActiveTab("orders")}
@@ -506,7 +504,7 @@ const MyAccount = () => {
                   <MetricCard
                     label="Shipping status"
                     value={addressReady ? "Ready to deliver" : "Needs update"}
-                    copy="Keep address details accurate to avoid checkout friction."
+                    copy="Keep your delivery details up to date."
                     icon="m11 4 7 7m-7-7 7 7M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-7-7-7 7Z"
                     accentClass="bg-secondary/10 text-secondary"
                     onClick={() => setActiveTab("addresses")}
@@ -515,7 +513,7 @@ const MyAccount = () => {
                   <MetricCard
                     label="Account details"
                     value={`${completion}% complete`}
-                    copy="Refine your profile info and stay on top of security."
+                    copy="Update your profile and security settings."
                     icon="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4Z"
                     accentClass="bg-yellow-light-4 text-yellow-dark-2"
                     onClick={() => setActiveTab("account-details")}
@@ -599,9 +597,8 @@ const MyAccount = () => {
                       <h2 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Track your orders in one place.
                       </h2>
-                      <p className="mt-2 max-w-[560px] text-sm text-dark-4 sm:text-base">
-                        Review purchase history, current status, and available
-                        actions without leaving your account.
+                      <p className="mt-2 max-w-[560px] text-custom-sm font-medium text-dark-4">
+                        Manage your purchase history and tracking.
                       </p>
                     </div>
 
@@ -633,9 +630,8 @@ const MyAccount = () => {
                       <h2 className="mt-2 text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Your current delivery address.
                       </h2>
-                      <p className="mt-2 max-w-[540px] text-sm text-dark-4 sm:text-base">
-                        Keep your shipping information fresh so checkout and
-                        delivery updates stay smooth.
+                      <p className="mt-2 max-w-[540px] text-custom-sm font-medium text-dark-4">
+                        Update your address for faster checkout.
                       </p>
                     </div>
 
@@ -718,9 +714,8 @@ const MyAccount = () => {
                       <h2 className="text-custom-xl font-semibold text-dark sm:text-heading-6">
                         Refresh the essentials whenever you need to.
                       </h2>
-                      <p className="mt-2 max-w-[640px] text-sm text-dark-4 sm:text-base">
-                        Your personal details and password controls now live in
-                        a clearer layout that reads well on every screen size.
+                      <p className="mt-2 max-w-[640px] text-custom-sm font-medium text-dark-4">
+                        Keep your personal info and security up to date.
                       </p>
                     </div>
 
